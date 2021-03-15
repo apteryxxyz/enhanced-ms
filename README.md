@@ -1,4 +1,4 @@
-# Enchanced MS
+# Enhanced MS
 
 [![Version][version-image]][github-url][![Downloads][downloads-image]][npm-url][![JavaScript][javascript-image]][github-url][![License][license-image]][license-url]
 
@@ -99,11 +99,11 @@ ms.measurements
 //]
 ```
 
-[version-image]: https://img.shields.io/github/package-json/v/apteryxxyz/enchaned-ms?logo=github
-[downloads-image]: https://img.shields.io/npm/dt/enchaned-ms?logo=npm
-[javascript-image]: https://img.shields.io/github/languages/top/apteryxxyz/enchaned-ms?logo=github
-[license-image]: https://img.shields.io/npm/l/enchaned-ms?logo=github
+[version-image]: https://img.shields.io/github/package-json/v/apteryxxyz/enhanced-ms?logo=github
+[downloads-image]: https://img.shields.io/npm/dt/enhanced-ms?logo=npm
+[javascript-image]: https://img.shields.io/github/languages/top/apteryxxyz/enhanced-ms?logo=github
+[license-image]: https://img.shields.io/npm/l/enhanced-ms?logo=github
 
-[npm-url]: https://npmjs.com/package/enchaned-ms
-[license-url]: https://github.com/apteryxxyz/enchaned-ms/blob/master/LICENSE
-[github-url]: https://github.com/apteryxxyz/enchaned-ms/
+[npm-url]: https://npmjs.com/package/enhanced-ms
+[license-url]: https://github.com/apteryxxyz/enhanced-ms/blob/master/LICENSE
+[github-url]: https://github.com/apteryxxyz/enhanced-ms/
