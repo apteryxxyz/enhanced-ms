@@ -24,6 +24,9 @@ module.exports = function (string) {
         // find the measurement object in measurements array
         measurement = measurements.find(m => m.long === measurement || m.short === measurement || m.plural === measurement);
         
+        // if no measurement skip and continue loop
+        if (!measurement) continue;
+
         // add measurements ms amount to total
         total += amount * measurement.ms;
     }
