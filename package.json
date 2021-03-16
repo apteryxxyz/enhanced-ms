@@ -1,6 +1,6 @@
 {
     "name": "enhanced-ms",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.",
     "author": {
         "name": "Apteryx",
