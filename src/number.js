@@ -2,7 +2,7 @@
 const { parse, pluralize, measurements } = require('./helper');
 
 // export function
-module.exports = function (milliseconds, options = { long: false, and: false, raw: false }) {
+module.exports = function (milliseconds, options = { long: false, and: false, raw: false, ms: false }) {
     // if milliseconds is greater than limit
     if (milliseconds > 999999999999999999999999999999) return null;
 
@@ -12,7 +12,7 @@ module.exports = function (milliseconds, options = { long: false, and: false, ra
     // return the parsed milliseconds if raw option is true
     if (options.raw === true) return timeObject
 
-    // turn the parsed milliseconds into an array to loop though
+    // turn the parsed milliseconds into an array to loop through
     const timeEntries = Object.entries(timeObject);
     
     // define final, an array to store the outputted strings
@@ -22,11 +22,14 @@ module.exports = function (milliseconds, options = { long: false, and: false, ra
     for (let i = 0; i < timeEntries.length; i++) {
         // give own variables to entry items
         let measurement = measurements.find(m => m.plural === timeEntries[i][0]);
-        const amount = timeEntries[i][1];
+        const amount = Math.abs(timeEntries[i][1]);
 
         // whether or not to use short time measurements
         const short = !options.long || false;
         measurement = short ? measurement.short : measurement.long;
+
+        // if options ms is false, skip adding milliseconds
+        if (['ms', 'milliseconds'].includes(measurement) && !options.ms) continue; 
 
         // if amount is single (1 or -1) use no plural
         if (amount === 1 || amount === -1) final.push('1' + (short ? '' : ' ') + measurement);
@@ -51,6 +54,9 @@ module.exports = function (milliseconds, options = { long: false, and: false, ra
         final.push(lastItem);
     }
 
+    // if final array is empty, return null
+    if (!final.length) return null;
+
     // return the result
-    return (milliseconds < 0 ? '-' : '') + final.join(' ');
+    return final.map(x => (milliseconds < 0 ? '-' : '') + x).join(' ');
 }

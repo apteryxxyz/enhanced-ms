@@ -33,12 +33,12 @@ ems('1m 30s') // => 90000
 // convert milliseconds to time frame
 oms(3456787654) // => '40d'
 pms(3456787654) // => '40d 13m 7.6s'
-ems(3456787654) // => '40d 13m 7s 654ms'
+ems(3456787654) // => '40d 13m 7s'
 
 // convert milliseconds to time frame with long option
 oms(198349884, { long: true }) // => '2 days'
 pms(198349884, { verbose: true }) // => '2 days 7 hours 5 minutes 49.8 seconds'
-ems(198349884, { long: true }) // => '2 days 7 hours 5 minutes 49 seconds 884 milliseconds'
+ems(198349884, { long: true }) // => '2 days 7 hours 5 minutes 49 seconds'
 ```
 
 ## Installation
@@ -60,10 +60,11 @@ const ms = require('enhanced-ms');
 ```js
 ms(1000) // => '1s'
 ms(90000) // => '1m 30s'
-ms(123456789 * 7) // => '10d 3m 17s 523ms'
-ms(-123456789) // => '-1d -10h -17m -36s -789ms'
+ms(123456789 * 7) // => '10d 3m 17s'
+ms(-123456789) // => '-1d -10h -17m -36s'
 ms(ms('3 hours 30m 15 seconds')) // => '3h 30m 15s'
 ms(ms('3 hours 45 minutes'), { and: true, long: true }) // => '3 hours and 45 minutes'
+ms(1298738, { ms: true }) // => '21m 38s 738ms'
 ```
 
 ### Written to Milliseconds
@@ -74,6 +75,7 @@ ms('1h 15m') // => 4500000
 ms(('1h').repeat(50)) // => 180000000
 ms(ms(7868783458)) // => 7868783458
 ms('1 millennium 1 centery 1 decade 1 year 1 month 1 week 1 day 1 hour 1 minute 1 second 1 millisecond') // => 35039782861001
+ms('-1d -12h') // => -129600000
 ```
 
 ### Extra Functions
