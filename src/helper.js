@@ -37,7 +37,7 @@ const parse = function (ms) {
 
 // pluralize time measurements
 const pluralize = function (word, count) {
-    // find the word in the constant measurements
+    // find the word in the measurements constant
     let measurement = Object.values(MEASUREMENTS).find(m => m.long === word || m.short === word || m.plural === word);
 
     // if word is short then return measurement.short as shorts have no plurals
@@ -49,7 +49,7 @@ const pluralize = function (word, count) {
     // if count is greater than one use plural
     else if (measurement && count > 1) return measurement.plural;
 
-    // else if count is greater than  1 return the original input with an s
+    // else if count is greater than 1 return the original input with an s
     else if (count > 1) return word + 's';
     
     // else return the original input
