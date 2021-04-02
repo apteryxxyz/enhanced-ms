@@ -19,7 +19,7 @@ module.exports = function (string) {
         let measurement = matched[i].replace(/[^A-Z]+/gi, '');
 
         // remove everything that isn't a number, . or -
-        const amount = matched[i].replace(/[^-0-9]+/gi, '');
+        const amount = matched[i].replace(/[^0-9.\-]/gi, '');
 
         // find the measurement object in measurements array
         measurement = measurements.find(m => m.long === measurement || m.short === measurement || m.plural === measurement);
