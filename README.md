@@ -70,8 +70,9 @@ ms(1298738, { ms: true }) // => '21m 38s 738ms'
 ### Written to Milliseconds
 
 ```js
-ms('1 minute') // => 62000
+ms('1 minute') // => 60000
 ms('1h 15m') // => 4500000
+ms('1.5h') // => 5400000
 ms(('1h').repeat(50)) // => 180000000
 ms(ms(7868783458)) // => 7868783458
 ms('1 millennium 1 centery 1 decade 1 year 1 month 1 week 1 day 1 hour 1 minute 1 second 1 millisecond') // => 35039782861001
