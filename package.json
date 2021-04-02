@@ -1,6 +1,6 @@
 {
     "name": "enhanced-ms",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.",
     "author": {
         "name": "Apteryx",
@@ -9,7 +9,7 @@
     },
     "main": "src/index.js",
     "license": "MIT",
-    "homepage": "https://github.com/apteryxxyz/enhanced-ms",
+    "homepage": "https://github.com/apteryxxyz/enhanced-ms#enhanced-ms",
     "changelog": {
         "url": "https://github.com/apteryxxyz/enhanced-ms/blob/CHANGELOG.md"
     },
