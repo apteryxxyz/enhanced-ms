@@ -35,3 +35,4 @@ export function ms(
 
 // assign parse, pluralize and measurements to exports
 export { parse, pluralize, measurements };
+export default ms;
