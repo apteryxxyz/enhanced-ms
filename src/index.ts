@@ -35,4 +35,8 @@ export function ms(
 
 // assign parse, pluralize and measurements to exports
 export { parse, pluralize, measurements };
-export default ms;
+export default Object.assign(ms, {
+  parse,
+  pluralize,
+  measurements,
+});

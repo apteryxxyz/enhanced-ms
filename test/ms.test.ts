@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
-import { ms, parse } from '..';
+/* eslint-disable no-undef -- eslint complains that jest functions are not defined */
+import ms, { parse } from '..';
 
 describe('ms(number)', () => {
   describe('ms(2000)', () => {
