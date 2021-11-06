@@ -1,105 +1,102 @@
 # Enhanced MS
 
-[![Version][version-image]][github-url][![Downloads][downloads-image]][npm-url][![JavaScript][javascript-image]][github-url][![License][license-image]][license-url]
+[![Version][version-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![JavaScript][javascript-image]][github-url]
+[![License][license-image]][license-url]
+
+Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.
 
 ## Table Of Contents
 
-- [**About**](#about)
-- [**MS vs Pretty MS vs Enhanced MS**](#MS-vs-Pretty-MS-vs-Enhanced-MS)
 - [**Installation**](#installation)
+- [**Features**](#features)
+- [**Comparison**](#comparison)
 - [**Examples**](#examples)
+    - [**Convert To Milliseconds**](#convert-to-milliseconds)
+    - [**Convert From Milliseconds**](#convert-from-milliseconds)
+- [**Usable Units**](#usage-units)
 
-## About
+## Installation
 
-A big problem I have with the `ms` module is that it rounds to the highst time measurement, so 3 hours and 45 minutes (in milliseconds) will round to 4 hours. `pretty-ms` fixes this, but that also has a big problem, it doesn't have the ability to convert written time frames to milliseconds. Problems from both begin to build up and because of these, I decided to make my own module, and publish it as `enhanced-ms`. Below is examples on how `enhanced-ms` compares to `ms` and `pretty-ms`.
+```sh-session
+npm install enhanced-ms
+yarn add enhanced-ms
+pnpm install enhanced-ms
+```
 
-## MS vs Pretty MS vs Enhanced MS
+```html
+<script src="https://unpkg.com/enhanced-ms/dist/ms.min.js"></script>
+```
+
+## Features
+
+- Works in both Node.js and the browser
+- If a number is supplied, ar readable string is returned
+- If a valid string is provided, the number of equivalent milliseconds is returned
+- Supports 13 different time units
+
+## Comparison
 
 ```js
-const oms = require('ms'); // original ms
-const pms = require('pretty-ms'); 
+const oms = require('ms');
+const pms = require('pretty-ms');
 const ems = require('enhanced-ms');
 
-// convert single written time frame to milliseconds
+// Convert a single written time frame to milliseconds
 oms('1m') // => 60000
 pms('1m') // => TypeError: Expected a finite number
 ems('1m') // => 60000
 
-// convert multiple written time frame measurements to milliseconds
+// Convert multiple written time frame measurements to milliseconds
 oms('1m 30s') // => undefined
 pms('1m 30s') // => TypeError: Expected a finite number
 ems('1m 30s') // => 90000
 
-// convert milliseconds to time frame
+// Convert milliseconds to time frame
 oms(3456787654) // => '40d'
 pms(3456787654) // => '40d 13m 7.6s'
 ems(3456787654) // => '40d 13m 7s'
 
-// convert milliseconds to time frame with long option
+// Convert milliseconds to time frame with long option
 oms(198349884, { long: true }) // => '2 days'
 pms(198349884, { verbose: true }) // => '2 days 7 hours 5 minutes 49.8 seconds'
-ems(198349884, { long: true }) // => '2 days 7 hours 5 minutes 49 seconds'
+ems(198349884, { verbose: true }) // => '2 days 7 hours 5 minutes 49 seconds'
 ```
-
-## Installation
-
-Stable:
-```npm install enhanced-ms```
-
-Latest:
-```npm install apteryxxyz/enhanced-ms```
 
 ## Examples
 
 ```js
 const ms = require('enhanced-ms');
+// OR
+import ms from 'enhanced-ms';
 ```
 
-### Milliseconds to Written
+### Convert To Milliseconds
 
 ```js
-ms(1000) // => '1s'
-ms(90000) // => '1m 30s'
-ms(123456789 * 7) // => '10d 3m 17s'
-ms(-123456789) // => '-1d -10h -17m -36s'
-ms(ms('3 hours 30m 15 seconds')) // => '3h 30m 15s'
-ms(ms('3 hours 45 minutes'), { and: true, long: true }) // => '3 hours and 45 minutes'
-ms(1298738, { ms: true }) // => '21m 38s 738ms'
+ms('2 hours')       // 7200000
+ms('1h')            // 3600000
+ms('1.5 days')      // 129600000
+ms('1d 12h')        // 129600000
+ms('1h'.repeat(50)) // 180000000
+ms('1 week')        // 604800000
+ms('1y 32w')        // 50889600000
+ms('-3 days')       // 259200000
+ms('1y -1y')        // 0
 ```
 
-### Written to Milliseconds
+### Convert From Milliseconds
 
 ```js
-ms('1 minute') // => 60000
-ms('1h 15m') // => 4500000
-ms('1.5h') // => 5400000
-ms(('1h').repeat(50)) // => 180000000
-ms(ms(7868783458)) // => 7868783458
-ms('1 millennium 1 centery 1 decade 1 year 1 month 1 week 1 day 1 hour 1 minute 1 second 1 millisecond') // => 35039782861001
-ms('-1d -12h') // => -129600000
-```
-
-### Extra Functions
-```js
-ms.parse(76746)
-// => {
-//  years: 0,
-//  days: 0,
-//  hours: 0,
-//  minutes: 1,
-//  seconds: 16,
-//  milliseconds: 746
-//}
-
-ms.pluralize('year', 1) // => 'year'
-ms.pluralize('minute', 3) // => 'minutes'
-
-ms.measurements
-// => [
-//  { long: 'millisecond', plural: 'milliseconds', short: 'ms', ms: 1 },
-//  { long: 'second', plural: 'seconds', short: 's', ms: 1000 },
-//  ...
-//]
+ms(1000)                                            // '1s'
+ms(90000)                                           // '1m 30s'
+ms(-420000)                                         // '-7m'
+ms(123456, { verbose: true })                       // '2 minutes 3 seconds'
+ms(987654, { includeMs: true })                     // '16m 27s 654ms'
+ms(123.456789, { includeSubMs: true })              // '123ms 456us 789ns'
+ms(0.123456, { useMu: true, includeSubMs: true })   // '123μs 456ns'
+ms(ms('3d 12h'), { includeAnd: true })              // '3d and 12h'
 ```
 
 [version-image]: https://img.shields.io/github/package-json/v/apteryxxyz/enhanced-ms?logo=github
@@ -110,3 +107,22 @@ ms.measurements
 [npm-url]: https://npmjs.com/package/enhanced-ms
 [license-url]: https://github.com/apteryxxyz/enhanced-ms/blob/master/LICENSE
 [github-url]: https://github.com/apteryxxyz/enhanced-ms/
+
+
+## Usable Units
+
+| Verbose     | Short |
+|-------------|-------|
+| nanosecond  | ns    |
+| microsecond | us    |
+| millisecond | ms    |
+| second      | s     |
+| minute      | m     |
+| hour        | h     |
+| day         | d     |
+| week        | w     |
+| month       | mn    |
+| year        | y     |
+| decade      | d     |
+| century     | c     |
+| millennium  | kyr   |

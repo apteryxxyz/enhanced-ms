@@ -1,31 +1,40 @@
-// import functions and variables from other files
-const number = require('./number'),
-    string = require('./string'),
-    { parse, pluralize, measurements } = require('./helper');
+const stringify = require('./stringify');
+const numberify = require('./numberify');
+const _ = require('./utils');
 
-/**
- * Easily convert milliseconds to a readable time frame OR convert a written time frame into milliseconds.
- * @param {string|number} value Either a written time frame or a time frame in milliseconds.
- * @param {object} options Options to customize what is outputed.
- */
-module.exports = function (value, options) {
-    // check if value is a number
-    if (typeof value === 'number') {
-        // if number is 'Infinity'
-        if (!Number.isFinite(value)) throw new TypeError('Number has be finite');
-
-        // run the number function with the value and options as the parameters
-        else return number(value, options);
+function ms(value, options) {
+    if (_.isObject(value)) {
+        ms.defaultOptions = _.formatOptions(value, ms.defaultOptions);
+        return ms;
     }
 
-    // check if value is a string, if so run the string function with the value as the parameter
-    // no options for the string function
-    else if (typeof value === 'string') return string(value);
+    if (_.isObject(options)) options = _.formatOptions(options, ms.defaultOptions);
+    else options = _.formatOptions(null, ms.defaultOptions);
 
-    // if value is not a string or number, throw an error
-    else throw new TypeError('Expected a number or a string, got ' + typeof value);
+    if (_.isNumber(value)) return stringify(value, options);
+    if (_.isString(value)) return numberify(value, options);
 
+    throw new TypeError(`Expected a number of a string, received ${value}`);
 }
 
-// assign parse, pluralize and measurements to exports
-Object.assign(module.exports, { parse, pluralize, measurements });
+const addons = {
+    version: require('../package.json').version,
+    isNode:
+        typeof process !== 'undefined' &&
+        typeof process.versions !== 'undefined' &&
+        typeof process.versions.node !== 'undefined',
+    isBrowser: typeof windows !== 'undefined' && typeof document !== 'undefined',
+};
+
+const methods = {
+    units: _.units,
+    stringify,
+    numberify,
+    parse: _.parse,
+    pluralize: _.pluralize,
+    isObject: _.isObject,
+    isNumber: _.isNumber,
+    isString: _.isString,
+};
+
+module.exports = Object.assign(ms, addons, methods);
