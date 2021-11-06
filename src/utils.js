@@ -52,11 +52,11 @@ function modulo(divident, divisor, emitWarning) {
     if (typeof BigInt === 'undefined') {
         if (divident > Number.MAX_SAFE_INTEGER && emitWarning === true) {
             console.warn(
-                `${divident} is above JavaScripts MAX_SAFE_INTEGER and BigInt is unavaiable, ` +
-                    'enhanced-ms may return an inaccurate result',
+                `${divident} is above JavaScripts MAX_SAFE_INTEGER and BigInt is unavailable, ` +
+                'enhanced-ms may return an inaccurate result',
             );
-            return divident % divisor;
         }
+        return divident % divisor;
     }
     return Number(BigInt(divident) % BigInt(divisor));
 }
