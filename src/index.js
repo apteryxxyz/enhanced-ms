@@ -14,7 +14,7 @@ function ms(value, options) {
     if (_.isNumber(value)) return stringify(value, options);
     if (_.isString(value)) return numberify(value, options);
 
-    throw new TypeError(`Expected a number of a string, received ${value}`);
+    throw new TypeError(`Expected a number or a string, received a ${typeof value}`);
 }
 
 const addons = {

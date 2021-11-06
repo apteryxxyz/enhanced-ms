@@ -1,24 +1,24 @@
 const { isString, units } = require('./utils');
 
 function numberify(string) {
-    if (!isString(string)) throw new TypeError(`Expected a number, received a ${typeof string}`);
+    if (!isString(string)) throw new TypeError(`Expected a string, received a ${typeof string}`);
 
     const matched = string.match(
         new RegExp(
             '(-?(?:\\d+)?\\.?\\d+) *' +
-                '(millenniums?|kyr' +
-                '|c(entur(y|ies))?' +
-                '|dec(ades?)?' +
-                '|ms|milliseconds?' +
-                '|(u|\u03BC)s|\\u03BCs|microseconds?' +
-                '|ns|nanoseconds?' +
-                '|y((ear)?s?)?' +
-                '|mo((nth)?s?)?' +
-                '|w((eek)?s?)?' +
-                '|d((ay)?s?)?' +
-                '|h((our)?s?)?' +
-                '|m(in(ute)?s?)?' +
-                '|s(ec(ond)?s?)?)',
+            '(millenniums?|kyr' +
+            '|c(entur(y|ies))?' +
+            '|dec(ades?)?' +
+            '|ms|milliseconds?' +
+            '|(u|\u03BC)s|\\u03BCs|microseconds?' +
+            '|ns|nanoseconds?' +
+            '|y((ear)?s?)?' +
+            '|mo((nth)?s?)?' +
+            '|w((eek)?s?)?' +
+            '|d((ay)?s?)?' +
+            '|h((our)?s?)?' +
+            '|m(in(ute)?s?)?' +
+            '|s(ec(ond)?s?)?)',
             'gi',
         ),
     );
