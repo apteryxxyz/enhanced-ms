@@ -5,20 +5,22 @@ function numberify(string) {
 
     const matched = string.match(
         new RegExp(
-            '(-?(?:\\d+)?\\.?\\d+) *' +
-            '(millenniums?|kyr' +
-            '|c(entur(y|ies))?' +
-            '|dec(ades?)?' +
-            '|ms|milliseconds?' +
-            '|(u|\u03BC)s|\\u03BCs|microseconds?' +
-            '|ns|nanoseconds?' +
-            '|y((ear)?s?)?' +
-            '|mo((nth)?s?)?' +
-            '|w((eek)?s?)?' +
-            '|d((ay)?s?)?' +
-            '|h((our)?s?)?' +
-            '|m(in(ute)?s?)?' +
-            '|s(ec(ond)?s?)?)',
+            [
+                '(-?(?:\\d+)?\\.?\\d+) *',
+                '(millenniums?|kyr',
+                '|c(entur(y|ies))?',
+                '|dec(ades?)?',
+                '|ms|milliseconds?',
+                '|(u|\u03BC)s|\\u03BCs|microseconds?',
+                '|ns|nanoseconds?',
+                '|y((ear)?s?)?',
+                '|mo((nth)?s?)?|mn(th)?s?',
+                '|w((eek)?s?)?',
+                '|d((ay)?s?)?',
+                '|h((our)?s?)?',
+                '|m(in(ute)?s?)?',
+                '|s(ec(ond)?s?)?)',
+            ].join(''),
             'gi',
         ),
     );
