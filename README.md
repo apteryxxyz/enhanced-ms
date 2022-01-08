@@ -99,16 +99,6 @@ ms(0.123456, { useMu: true, includeSubMs: true })   // '123μs 456ns'
 ms(ms('3d 12h'), { includeAnd: true })              // '3d and 12h'
 ```
 
-[version-image]: https://img.shields.io/github/package-json/v/apteryxxyz/enhanced-ms?logo=github
-[downloads-image]: https://img.shields.io/npm/dt/enhanced-ms?logo=npm
-[javascript-image]: https://img.shields.io/github/languages/top/apteryxxyz/enhanced-ms?logo=github
-[license-image]: https://img.shields.io/npm/l/enhanced-ms?logo=github
-
-[npm-url]: https://npmjs.com/package/enhanced-ms
-[license-url]: https://github.com/apteryxxyz/enhanced-ms/blob/master/LICENSE
-[github-url]: https://github.com/apteryxxyz/enhanced-ms/
-
-
 ## Usable Units
 
 | Verbose     | Short |
@@ -126,3 +116,12 @@ ms(ms('3d 12h'), { includeAnd: true })              // '3d and 12h'
 | decade      | d     |
 | century     | c     |
 | millennium  | kyr   |
+
+[version-image]: https://img.shields.io/github/package-json/v/apteryxxyz/enhanced-ms?logo=npm
+[downloads-image]: https://img.shields.io/npm/dt/enhanced-ms?logo=npm
+[javascript-image]: https://img.shields.io/github/languages/top/apteryxxyz/enhanced-ms?logo=github
+[license-image]: https://img.shields.io/npm/l/enhanced-ms?logo=github
+
+[npm-url]: https://npmjs.com/package/enhanced-ms
+[license-url]: https://github.com/apteryxxyz/enhanced-ms/blob/master/LICENSE
+[github-url]: https://github.com/apteryxxyz/enhanced-ms/

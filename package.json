@@ -1,6 +1,6 @@
 {
     "name": "enhanced-ms",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
     "description": "Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.",
     "homepage": "https://github.com/apteryxxyz/enhanced-ms",
@@ -10,12 +10,14 @@
         "url": "https://apteryx.xyz/"
     },
     "main": "./dist/ms.min.js",
+    "types": "./index.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "index.d.ts"
     ],
     "scripts": {
         "eslint": "eslint ./src --fix",
-        "prettier": "prettier --write ./src",
+        "prettier": "prettier --write ./src index.d.ts",
         "build": "npm run prettier && npm run eslint && webpack --config webpack.config.js"
     },
     "repository": {
