@@ -12,7 +12,7 @@ export default function (
     if (!isString(input)) throw new TypeError(`Expected a string, recieved a ${typeof input}`);
 
     const foundMatches = input.match(language.regex);
-    if (!foundMatches || foundMatches.length === 0) return 0;
+    if (!foundMatches || foundMatches.length === 0) return null;
 
     const finalCode = [];
     let bracketCount = 0;
@@ -34,6 +34,8 @@ export default function (
             }
         }
     }
+
+    if (finalCode.length === 0) return null;
 
     try {
         const code = finalCode.join('') + ')'.repeat(bracketCount);
