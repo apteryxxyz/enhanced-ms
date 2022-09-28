@@ -4,6 +4,15 @@ import { defaultLanguageOptions, LanguageOptions } from './languages';
 export interface NumberifyOptions {}
 export const defaultNumberifyOptions: NumberifyOptions = {};
 
+function isOperator(v: unknown): v is '-' | '+' | '*' | '/' {
+    return (
+        !!v &&
+        typeof v === 'string' &&
+        v.length === 1 &&
+        (v === '-' || v === '+' || v === '*' || v === '/')
+    );
+}
+
 export default function (
     input: string,
     _options: NumberifyOptions = defaultNumberifyOptions,
@@ -18,10 +27,10 @@ export default function (
     let bracketCount = 0;
 
     for (let i = 0; i < foundMatches.length; i++) {
-        const match = foundMatches[i];
-        const prevOp = /[-+*/]/.test(foundMatches[i - 1]);
+        const [match, previous] = [foundMatches[i], foundMatches[i - 1]];
+        const prevOp = isOperator(previous);
 
-        if (/[-+*/]/.test(match)) finalCode.push(match);
+        if (isOperator(previous)) finalCode.push(match);
         else if (/[0-9.,]+/.test(match)) {
             finalCode.push(prevOp ? '' : '+', '(', match);
             bracketCount++;
@@ -41,6 +50,6 @@ export default function (
         const code = finalCode.join('') + ')'.repeat(bracketCount);
         return new Function(`return ${code}`)();
     } catch (e) {
-        return 0;
+        return null;
     }
 }
