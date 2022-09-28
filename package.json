@@ -18,8 +18,8 @@
     ],
     "packageManager": "yarn@3.2.3",
     "scripts": {
-        "lint": "eslint {src,bin} --fix",
-        "format": "prettier src bin --write",
+        "lint": "eslint src --fix",
+        "format": "prettier src --write",
         "test": "jest",
         "build:compile": "tsc && webpack && rm -rf temp",
         "build:module": "gen-esm-wrapper . ./dist/index.mjs",
