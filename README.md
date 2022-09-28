@@ -1,5 +1,5 @@
 <div align="center">
-    <i>Convert human readable timeframe strings to milliseconds and back to strings</i><br>
+    <i>Convert human readable time-frame strings to milliseconds and back to strings</i><br>
     <code>npm install enhanced-ms</code>
 </div>
 
@@ -13,27 +13,32 @@
 
 # 🤔 About
 
-Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.
+Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa. It is an enhanced version of the original [ms](https://github.com/vercel/ms).
 
-## Feature
+`enhanced-ms` is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa. It is an enhanced version of the original `ms` module, with support for localisation and operators!
 
-- Convert from timeframe to milliseconds
-- Convert from milliseconds to timeframe
-- Support for operators in timeframe string
-- Support for different languages
+## Features
+
+- Localisation support!
+- Convert from milliseconds to time-frame
+- Convert from time-frame to milliseconds
+- Operator in time-frame support
+- Customisable outputs
 
 # 🏓 Table of Contents
 
 - [🤔 About](#-about)
-  - [Feature](#feature)
+  - [Features](#features)
 - [🏓 Table of Contents](#-table-of-contents)
 - [📩 Installation](#-installation)
 - [🧭 Comparison](#-comparison)
 - [🌐 Languages](#-languages)
 - [🍕 API](#-api)
+  - [Conversion](#conversion)
+  - [Globals](#globals)
 - [🌀 Examples](#-examples)
-  - [Timeframe to Milliseconds](#timeframe-to-milliseconds)
-  - [Milliseconds to TImeframe](#milliseconds-to-timeframe)
+  - [Time-frame to Milliseconds](#time-frame-to-milliseconds)
+  - [Milliseconds to Time-frame](#milliseconds-to-time-frame)
   - [Set Global Options](#set-global-options)
   - [Set Global Language](#set-global-language)
 
@@ -45,29 +50,39 @@ yarn add enhanced-ms
 pnpm add enhanced-ms
 ```
 
+```js
+const ms = require('enhanced-ms');
+// OR
+import ms from 'enhanced-ms';
+```
+
 # 🧭 Comparison
+
+As mentioned previously, `enhanced-ms` is inspired by the original `ms` module, so how does it compare to it?
+
+`pretty-ms` is another conversion module.
 
 ```ts
 import oms from 'ms';
 import pms from 'pretty-ms';
 import ems from 'enhanced-ms';
 
-// Convert a single written time frame to milliseconds
+// Convert a single written time-frame to milliseconds
 oms('1m') // -> 60000
 pms('1m') // -> TypeError: Expected a finite number
 ems('1m') // -> 60000
 
-// Convert multiple written time frame measurements to milliseconds
+// Convert multiple written time-frame measurements to milliseconds
 oms('1m 30s') // -> undefined
 pms('1m 30s') // -> TypeError: Expected a finite number
 ems('1m 30s') // -> 90000
 
-// Convert milliseconds to time frame with long option
+// Convert milliseconds to time-frame with long option
 oms(198349884, { long: true }) // -> '2 days'
 pms(198349884, { verbose: true }) // -> '2 days 7 hours 5 minutes 49.8 seconds'
 ems(198349884) // -> '2 days 7 hours 5 minutes and 49 seconds'
 
-// Convert milliseconds to time frame
+// Convert milliseconds to time-frame
 oms(3456787654) // -> '40d'
 pms(3456787654) // -> '40d 13m 7.6s'
 ems(3456787654, { shortFormat: true }) // -> '40d 13m 7s'
@@ -75,30 +90,59 @@ ems(3456787654, { shortFormat: true }) // -> '40d 13m 7s'
 
 # 🌐 Languages
 
+The currently supported languages include:
+
 | Language |  Key  |
 | :------: | :---: |
 | English  |  en   |
 |  Māori   |  mi   |
 
 You can help by adding support for more languages.
+
 Make a pull request [here](https://github.com/apteryxxyz/enhanced-ms).
 
 # 🍕 API
 
-```js
-const ms = require('enhanced-ms');
-// OR
-import ms from 'enhanced-ms';
-```
+`enhanced-ms`
 
-**Main Function**
+## Conversion
+
+When the first parameter is a string, the module will parse it and convert it into a time-frame in milliseconds.
+
+If no time units were found within the string, `null` will be returned.
 
 ```ts
-function ms(
-    value1?: string | number | LanguageKey | Options,
-    value2?: LanguageKey | Options,
-    value3?: Options
-): number | string | null | typeof ms;
+function ms(value1: string, value2?: LanguageKey | Options, value3?: Options): number | null;
+```
+
+However then the first parameter is a number it will be converted into a time-frame string.
+
+If no time units were outputted (for example then the inputted number is less than `1000` and `includeMs` is `false`), `null` will be returned.
+
+```ts
+function ms(value1: number, value2?: LanguageKey | Options, value3?: Options): string | null;
+```
+
+For both of the above overloads, the second parameter can either be the language key, or the options object. The third and final parameter is only ever used if no language key was supplied.
+
+## Globals
+
+If you prefer that the results always include in a different language, or if you want milliseconds to always be included, this is for you.
+
+The following will overwrite the modules defaults, you can find some examples further down.
+
+```ts
+function ms(value1: LanguageKey): typeof ms;
+```
+
+```ts
+function ms(value1: Options): typeof ms;
+```
+
+Both of these will return the `ms` function, which will allow you to do:
+
+```js
+const ms = require('ms')('en')({ roundUp: true });
 ```
 
 **TypeScript Interfaces**
@@ -120,7 +164,7 @@ interface Options {
 
 # 🌀 Examples
 
-## Timeframe to Milliseconds
+## Time-frame to Milliseconds
 
 ```js
 ms('1 day') === 86400000
@@ -130,7 +174,7 @@ ms(ms('7d / 7')) === '1 day'
 ms('1 meneti', 'mi') === 60000
 ```
 
-## Milliseconds to TImeframe
+## Milliseconds to Time-frame
 
  ```js
 ms(123456) === '2 minutes and 3 seconds'

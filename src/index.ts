@@ -22,8 +22,8 @@ let DEFAULT_OPTIONS = formatOptions({}, {});
 let LANGUAGE_OPTIONS = defaultLanguageOptions;
 
 /**
- * Convert a human readable timeframe string into milliseconds.
- * @param value1 String timeframe
+ * Convert a human readable time-frame string into milliseconds.
+ * @param value1 String time-frame
  * @param value2 Language key **OR** options object
  * @param value3 Options object
  * @example
