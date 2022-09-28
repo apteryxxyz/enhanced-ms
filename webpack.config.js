@@ -1,20 +1,24 @@
-const webpack = require('webpack');
 const path = require('path');
+const BundleDeclarationsWebpackPlugin = require('bundle-declarations-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './temp/index.js',
+    target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'ms.min.js',
+        filename: 'index.js',
         library: {
-            type: "umd",
-            name: "ms",
+            type: 'umd',
+            name: 'what',
         },
-        globalObject: 'this',
+        globalObject: 'globalThis',
     },
     mode: 'production',
     plugins: [
-
+        new BundleDeclarationsWebpackPlugin({
+            entry: ['src/index.ts'],
+            outFile: 'index.d.ts',
+        }),
     ],
     module: {
         rules: [
@@ -24,10 +28,10 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            }
-        ]
-    }
-}
+                        presets: ['@babel/preset-env'],
+                    },
+                },
+            },
+        ],
+    },
+};

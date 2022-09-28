@@ -1,0 +1,13 @@
+{
+    "extends": "ts-config-apteryx",
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./temp",
+        "lib": ["esnext"],
+        "target": "es2017",
+        "resolveJsonModule": true
+    },
+    "exclude": ["./node_modules/", "./dist/", "./**/_*/"],
+    "include": ["./src/**/*.ts"]
+}

@@ -1,49 +1,106 @@
 {
     "name": "enhanced-ms",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "license": "MIT",
-    "description": "Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa.",
-    "homepage": "https://github.com/apteryxxyz/enhanced-ms",
+    "description": "Convert human readable timeframe strings to milliseconds and back to strings. Works in Node.js and the browser",
+    "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
     "author": {
         "name": "ApteryxXYZ",
-        "email": "kiaora@apteryx.xyz",
-        "url": "https://apteryx.xyz/"
+        "url": "https://apteryx.xyz"
     },
-    "main": "./dist/ms.min.js",
-    "types": "./index.d.ts",
+    "main": "./dist/index.js",
+    "exports": {
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+    },
     "files": [
-        "dist",
-        "index.d.ts"
+        "dist"
     ],
+    "packageManager": "yarn@3.2.3",
     "scripts": {
-        "eslint": "eslint ./src --fix",
-        "prettier": "prettier --write ./src index.d.ts",
-        "build": "npm run prettier && npm run eslint && webpack --config webpack.config.js"
+        "lint": "eslint {src,bin} --fix",
+        "format": "prettier src bin --write",
+        "test": "jest",
+        "build:compile": "tsc && webpack && rm -rf temp",
+        "build:module": "gen-esm-wrapper . ./dist/index.mjs",
+        "build": "yarn build:compile && yarn build:module"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/apteryxxyz/enhanced-ms"
     },
     "bugs": {
-        "url": "https://github.com/apteryxxyz/enhanced-ms"
+        "url": "https://github.com/apteryxxyz/enhanced-ms/issues"
     },
     "keywords": [
-        "enhanced-ms",
-        "ms",
-        "milliseconds",
         "convert",
-        "stringify",
-        "numberify"
+        "duration",
+        "human",
+        "humanise",
+        "humanize",
+        "microseconds",
+        "milliseconds",
+        "ms",
+        "number",
+        "parse",
+        "period",
+        "pretty",
+        "print",
+        "range",
+        "readable",
+        "seconds",
+        "string",
+        "time"
     ],
     "devDependencies": {
-        "@babel/core": "^7.16.0",
-        "@babel/preset-env": "^7.16.0",
-        "babel-loader": "^8.2.3",
-        "eslint": "^8.1.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-prettier": "^4.0.0",
-        "prettier": "^2.4.1",
-        "webpack": "^5.62.1",
-        "webpack-cli": "^4.9.1"
+        "@babel/core": "^7.19.1",
+        "@babel/preset-env": "^7.19.1",
+        "@types/babel__core": "^7",
+        "@types/babel__preset-env": "^7",
+        "@types/node": "^18.7.21",
+        "@typescript-eslint/eslint-plugin": "^5.38.0",
+        "@typescript-eslint/parser": "^5.38.0",
+        "babel-loader": "^8.2.5",
+        "bundle-declarations-webpack-plugin": "^3.1.1",
+        "eslint": "^8.24.0",
+        "eslint-config-apteryx": "^1.0.4",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "gen-esm-wrapper": "^1.1.3",
+        "jest": "^29.0.3",
+        "prettier": "^2.7.1",
+        "prettier-config-apteryx": "^1.0.0",
+        "ts-config-apteryx": "^1.0.0",
+        "typescript": "<4.8.0",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
+    },
+    "prettier": "prettier-config-apteryx",
+    "eslintConfig": {
+        "plugins": [
+            "prettier"
+        ],
+        "extends": [
+            "plugin:prettier/recommended",
+            "apteryx",
+            "apteryx/typescript"
+        ],
+        "parserOptions": {
+            "ecmaVersion": 2021
+        },
+        "env": {
+            "es2021": true,
+            "node": true,
+            "browser": true
+        },
+        "ignorePatterns": [
+            "test/*",
+            "examples/*",
+            "scripts/*",
+            "dist/*",
+            "temp/*",
+            "_src/*",
+            "*.config.js"
+        ]
     }
 }
