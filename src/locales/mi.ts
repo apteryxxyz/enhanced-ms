@@ -37,8 +37,8 @@ export default {
         },
         {
             key: 'd',
-            long: 'ra',
-            matches: ['ra'],
+            long: 'rā',
+            matches: ['rā', 'ra'],
         },
         {
             key: 'w',
