@@ -13,9 +13,7 @@
 
 # 🤔 About
 
-Enhanced MS is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa. It is an enhanced version of the original [ms](https://github.com/vercel/ms).
-
-`enhanced-ms` is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa. It is an enhanced version of the original `ms` module, with support for localisation and operators!
+`enhanced-ms` is a simple, zero dependencies, module that lets you easily convert milliseconds to a readable format and vice versa. It is an enhanced version of the original `ms` module, with support for mutliple time-frames, localisation and operators!
 
 ## Features
 
