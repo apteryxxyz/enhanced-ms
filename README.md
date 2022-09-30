@@ -101,8 +101,6 @@ Make a pull request [here](https://github.com/apteryxxyz/enhanced-ms).
 
 # 🍕 API
 
-`enhanced-ms`
-
 ## Conversion
 
 When the first parameter is a string, the module will parse it and convert it into a time-frame in milliseconds.
@@ -140,7 +138,7 @@ function ms(value1: Options): typeof ms;
 Both of these will return the `ms` function, which will allow you to do:
 
 ```js
-const ms = require('ms')('en')({ roundUp: true });
+const ms = require('enhanced-ms')('en')({ roundUp: true });
 ```
 
 **TypeScript Interfaces**
