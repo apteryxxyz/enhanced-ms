@@ -52,7 +52,6 @@ export default function (
 
     try {
         const code = finalCode.join('');
-        console.log(code);
         return new Function(`return ${code}`)();
     } catch {
         return null;
