@@ -79,7 +79,7 @@ export default function (
             }
 
             const plural = pluraliseUnit(firstUnit, firstFinal, useShort);
-            return `${firstFinal}${useShort ? '' : ' '}${plural}`;
+            return `${Math.abs(firstFinal)}${useShort ? '' : ' '}${plural}`;
         }
 
         const plural = pluraliseUnit(unit, amount, useShort);
@@ -87,9 +87,8 @@ export default function (
     }
 
     if (finalString.length === 0) return null;
-    if (finalString.length === 1) return finalString[0];
 
-    if (useShort === false) {
+    if (useShort === false && finalString.length > 1) {
         const lastItem = finalString.pop();
         finalString.push(language.and);
         finalString.push(lastItem);

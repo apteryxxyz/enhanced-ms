@@ -36,8 +36,8 @@ export function pluraliseUnit(unit: Unit, count: number, compact: boolean) {
     const short = unit.short
         ? typeof unit.short === 'string'
             ? unit.short
-            : unit.short(count)
+            : unit.short(Math.abs(count))
         : (compact = false);
-    const long = typeof unit.long === 'string' ? unit.long : unit.long(count);
+    const long = typeof unit.long === 'string' ? unit.long : unit.long(Math.abs(count));
     return compact ? short : long;
 }
