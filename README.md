@@ -25,20 +25,20 @@
 
 # 🏓 Table of Contents
 
-- [🤔 About](#-about)
-  - [Features](#features)
-- [🏓 Table of Contents](#-table-of-contents)
-- [📩 Installation](#-installation)
-- [🧭 Comparison](#-comparison)
-- [🌐 Languages](#-languages)
-- [🍕 API](#-api)
-  - [Conversion](#conversion)
-  - [Globals](#globals)
-- [🌀 Examples](#-examples)
-  - [Time-frame to Milliseconds](#time-frame-to-milliseconds)
-  - [Milliseconds to Time-frame](#milliseconds-to-time-frame)
-  - [Set Global Options](#set-global-options)
-  - [Set Global Language](#set-global-language)
+-   [🤔 About](#-about)
+    -   [Features](#features)
+-   [🏓 Table of Contents](#-table-of-contents)
+-   [📩 Installation](#-installation)
+-   [🧭 Comparison](#-comparison)
+-   [🌐 Languages](#-languages)
+-   [🍕 API](#-api)
+    -   [Conversion](#conversion)
+    -   [Globals](#globals)
+-   [🌀 Examples](#-examples)
+    -   [Time-frame to Milliseconds](#time-frame-to-milliseconds)
+    -   [Milliseconds to Time-frame](#milliseconds-to-time-frame)
+    -   [Set Global Options](#set-global-options)
+    -   [Set Global Language](#set-global-language)
 
 # 📩 Installation
 
@@ -90,11 +90,11 @@ ems(3456787654, { shortFormat: true }); // -> '40d 13m 7s'
 
 The currently supported languages include:
 
-| Language |  Key  |
-| :------: | :---: |
-| English  |  en   |
-|  Māori   |  mi   |
-|  German  |  de   |
+| Language | Key |
+| :------: | :-: |
+| English  | en  |
+|  German  | de  |
+|  Māori   | mi  |
 
 You can help by adding support for more languages.
 
