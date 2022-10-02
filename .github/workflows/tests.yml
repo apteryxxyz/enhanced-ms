@@ -26,6 +26,9 @@ jobs:
       - name: Build dependencies
         run: yarn install --immutable
 
+      - name: Build package
+        run: yarn build
+
       - name: ESLint
         run: yarn lint
 
