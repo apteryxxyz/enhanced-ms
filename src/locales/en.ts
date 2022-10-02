@@ -2,7 +2,6 @@ import type { Language } from '../languages';
 
 export default {
     decimal: '.',
-    thousands: [' ', ','],
     and: 'and',
 
     units: [

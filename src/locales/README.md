@@ -4,8 +4,7 @@ Each of the localisation files should export the following `Language` interface:
 
 ```ts
 export interface Language {
-    decimal: '.' | ',' | Array<'.' | ','>;
-    thousands: ' ' | ',' | '.' | Array<' ' | ',' | '.'>;
+    decimal: '.' | ',';
     and: string;
     units: Unit[];
 }
@@ -20,9 +19,7 @@ export interface Unit {
 
 ## Language Interface
 
--   `decimal` should be the decimal separator the language uses, `.` or `,`. This can
-
--   `thousands` should be the thousands separator the language uses, ` `, `.`, or `,`.
+-   `decimal` should be the decimal separator the language uses, `.` or `,`.
 
 -   `and` should be the version of 'and' in the language.
 
