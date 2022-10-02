@@ -13,12 +13,12 @@ export default {
         {
             key: 'us',
             long: c => (c === 1 ? 'Mikrosekunde' : 'Mikrosekunden'),
-            matches: ['us', 'mikrosekunde', 'mikrosekunden', 'mikros'],
+            matches: ['us', 'mk', 'mikrosekunde', 'mikrosekunden', 'mikros'],
         },
         {
             key: 'ms',
             long: c => (c === 1 ? 'Millisekunde' : 'Millisekunden'),
-            matches: ['ms', 'millisekunde', 'millisekunden', 'millis', 'ml', 'mi'],
+            matches: ['ms', 'ml', 'mi', 'millisekunde', 'millisekunden', 'millis'],
         },
         {
             key: 's',
@@ -38,12 +38,12 @@ export default {
         {
             key: 'd',
             long: c => (c === 1 ? 'Tag' : 'Tage'),
-            matches: ['d', 'tag', 'tage', 't'],
+            matches: ['d', 't', 'tag', 'tage'],
         },
         {
             key: 'w',
             long: c => (c === 1 ? 'Woche' : 'Wochen'),
-            matches: ['w', 'woche', 'wochen', 'wo'],
+            matches: ['w', 'wo', 'woche', 'wochen'],
         },
         {
             key: 'mo',
@@ -53,25 +53,25 @@ export default {
         {
             key: 'y',
             long: c => (c === 1 ? 'Jahr' : 'Jahre'),
-            matches: ['y', 'j', 'jahr', 'jahre'],
+            matches: ['y', 'a', 'j', 'jahr', 'jahre'],
         },
         {
             key: 'dec',
             long: c => (c === 1 ? 'Jahrzehnt' : 'Jahrzehnte'),
-            short: 'Jz',
-            matches: ['dec', 'jz', 'jahrzehnt', 'jahrzehnte'],
+            short: 'Jz.',
+            matches: ['jz', 'jahrzehnt', 'jahrzehnte'],
         },
         {
             key: 'c',
             long: c => (c === 1 ? 'Jahrhundert' : 'Jahrhunderte'),
-            short: 'Jh',
-            matches: ['c', 'jh', 'jahrhundert', 'jahrhunderte'],
+            short: 'Jh.',
+            matches: ['c', 'jh', 'jhd', 'jahrhundert', 'jahrhunderte'],
         },
         {
             key: 'kyr',
             long: c => (c === 1 ? 'Jahrtausend' : 'Jahrtausende'),
             short: 'Jt',
-            matches: ['kyr', 'jt', 'jtd', 'jtsd', 'jahrt', 'jahrtausend', 'jahrtausende'],
+            matches: ['jt', 'jtd', 'jtsd', 'jahrt', 'jahrtausend', 'jahrtausende'],
         },
     ],
 } as Language;
