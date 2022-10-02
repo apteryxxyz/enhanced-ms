@@ -2,7 +2,8 @@ import measurements from './measurements';
 
 import en from './locales/en';
 import mi from './locales/mi';
-const languages = { en, mi };
+import de from './locales/de';
+const languages = { en, mi, de };
 export default languages;
 
 export interface Unit {
