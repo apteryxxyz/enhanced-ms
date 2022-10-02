@@ -28,26 +28,25 @@ export default function (
 
     for (let i = 0; i < foundMatches.length; i++) {
         const [match, previous] = [foundMatches[i], foundMatches[i - 1]];
-        const prevOp = isOperator(previous);
 
-        if (isOperator(previous)) finalCode.push(match);
+        if (isOperator(match)) finalCode.push(match);
         else if (/[0-9.,]+/.test(match)) {
-            finalCode.push(prevOp ? '' : '+', '(', match);
+            if (!isOperator(previous)) finalCode.push('+');
+            finalCode.push('(', match);
             bracketCount++;
         } else {
             const unit = language.units[match];
             if (!isObject(unit)) continue;
-            else {
-                finalCode.push(prevOp ? '' : '*', unit.ms, ')');
-                bracketCount--;
-            }
+            if (!isOperator(previous)) finalCode.push('*');
+            finalCode.push(unit.ms);
         }
     }
 
     if (finalCode.length === 0) return null;
 
     try {
-        const code = finalCode.join('') + ')'.repeat(bracketCount);
+        const rightBrackets = bracketCount > 0 ? ')'.repeat(bracketCount) : '';
+        const code = finalCode.join('') + rightBrackets;
         return new Function(`return ${code}`)();
     } catch (e) {
         return null;
