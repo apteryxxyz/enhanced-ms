@@ -16,5 +16,7 @@
   color: '7057ff'
 - name: 'tests'
   color: 'f06dff'
-- name: 'wont fix'
+- name: 'translation'
+  color: '4285f4'
+- name: 'wontfix'
   color: 'ffffff'
