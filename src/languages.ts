@@ -17,7 +17,7 @@ export interface Unit {
 }
 
 export interface Language {
-    /** The decimal this language uses */
+    /** The decimal separator this language uses */
     decimal: '.' | ',';
     /** The version of 'and' in this language */
     and: string;
@@ -28,8 +28,10 @@ export interface Language {
 export interface LanguageOptions {
     /** The key for the selected language */
     key: LanguageKey;
-    /** The decimal the language uses */
+    /** The decimal separator the language uses */
     decimal: string;
+    /** The thousands separator the language uses */
+    thousands: string;
     /** The version of 'and' in the language */
     and: string;
     /** Whether the language has full short support */
@@ -54,11 +56,15 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
     if (LANGUAGE_CACHE[key]) return LANGUAGE_CACHE[key];
 
     const language = languages[key];
+    const decimal = language.decimal;
+    const thousands = decimal === '.' ? ',' : '.';
 
     const regex = new RegExp(
-        '([-+*/]+|' +
-            `\\d?\\${language.decimal}?\\d+|` +
-            language.units
+        '([-+*/]+|' + // Operators
+            '[()]|' +
+            `(?![${decimal}${thousands}])` + // Dont match single .,
+            `[\\d${decimal}${thousands}]+|` + // Numbers
+            language.units // Units
                 .map(u => u.matches)
                 .flat()
                 .sort((a, b) => b.length - a.length)
@@ -78,7 +84,8 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
 
     return {
         key,
-        decimal: language.decimal,
+        decimal,
+        thousands,
         and: language.and,
         short: language.units.some(u => u.short),
         regex,

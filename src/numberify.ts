@@ -13,6 +13,10 @@ function isOperator(v: unknown): v is '-' | '+' | '*' | '/' {
     );
 }
 
+function isBracket(v: unknown): v is '(' | ')' {
+    return !!v && typeof v === 'string' && v.length === 1 && (v === '(' || v === ')');
+}
+
 export default function (
     input: string,
     _options: NumberifyOptions = defaultNumberifyOptions,
@@ -22,33 +26,35 @@ export default function (
 
     const foundMatches = input.match(language.regex);
     if (!foundMatches || foundMatches.length === 0) return null;
-
     const finalCode = [];
-    let bracketCount = 0;
 
     for (let i = 0; i < foundMatches.length; i++) {
-        const [match, previous] = [foundMatches[i], foundMatches[i - 1]];
+        const [next, match, prev] = [foundMatches[i + 1], foundMatches[i], foundMatches[i - 1]];
 
-        if (isOperator(match)) finalCode.push(match);
-        else if (/[0-9.,]+/.test(match)) {
-            if (!isOperator(previous)) finalCode.push('+');
-            finalCode.push('(', match);
-            bracketCount++;
+        if (isOperator(match) || isBracket(match)) finalCode.push(match);
+        else if (/[0-9 ,.]/.test(match)) {
+            if (!isOperator(prev)) finalCode.push('+');
+            if (language.units[next]) finalCode.push('(');
+            const value = match
+                .replaceAll(language.thousands, '')
+                .replaceAll(language.decimal, '.');
+            finalCode.push(value);
         } else {
             const unit = language.units[match];
             if (!isObject(unit)) continue;
-            if (!isOperator(previous)) finalCode.push('*');
-            finalCode.push(unit.ms);
+            if (!isOperator(prev)) finalCode.push('*');
+            finalCode.push(unit.ms + '');
+            if (/[0-9.]/.test(prev)) finalCode.push(')');
         }
     }
 
     if (finalCode.length === 0) return null;
 
     try {
-        const rightBrackets = bracketCount > 0 ? ')'.repeat(bracketCount) : '';
-        const code = finalCode.join('') + rightBrackets;
+        const code = finalCode.join('');
+        console.log(code);
         return new Function(`return ${code}`)();
-    } catch (e) {
+    } catch {
         return null;
     }
 }
