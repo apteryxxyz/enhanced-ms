@@ -17,11 +17,11 @@
 
 ## Features
 
-- Localisation support!
-- Convert from milliseconds to time-frame
-- Convert from time-frame to milliseconds
-- Operator in time-frame support
-- Customisable outputs
+-   Localisation support!
+-   Convert from milliseconds to time-frame
+-   Convert from time-frame to milliseconds
+-   Operator in time-frame support
+-   Customisable outputs
 
 # 🏓 Table of Contents
 
@@ -66,24 +66,24 @@ import pms from 'pretty-ms';
 import ems from 'enhanced-ms';
 
 // Convert a single written time-frame to milliseconds
-oms('1m') // -> 60000
-pms('1m') // -> TypeError: Expected a finite number
-ems('1m') // -> 60000
+oms('1m'); // -> 60000
+pms('1m'); // -> TypeError: Expected a finite number
+ems('1m'); // -> 60000
 
 // Convert multiple written time-frame measurements to milliseconds
-oms('1m 30s') // -> undefined
-pms('1m 30s') // -> TypeError: Expected a finite number
-ems('1m 30s') // -> 90000
+oms('1m 30s'); // -> undefined
+pms('1m 30s'); // -> TypeError: Expected a finite number
+ems('1m 30s'); // -> 90000
 
 // Convert milliseconds to time-frame with long option
-oms(198349884, { long: true }) // -> '2 days'
-pms(198349884, { verbose: true }) // -> '2 days 7 hours 5 minutes 49.8 seconds'
-ems(198349884) // -> '2 days 7 hours 5 minutes and 49 seconds'
+oms(198349884, { long: true }); // -> '2 days'
+pms(198349884, { verbose: true }); // -> '2 days 7 hours 5 minutes 49.8 seconds'
+ems(198349884); // -> '2 days 7 hours 5 minutes and 49 seconds'
 
 // Convert milliseconds to time-frame
-oms(3456787654) // -> '40d'
-pms(3456787654) // -> '40d 13m 7.6s'
-ems(3456787654, { shortFormat: true }) // -> '40d 13m 7s'
+oms(3456787654); // -> '40d'
+pms(3456787654); // -> '40d 13m 7.6s'
+ems(3456787654, { shortFormat: true }); // -> '40d 13m 7s'
 ```
 
 # 🌐 Languages
@@ -163,40 +163,40 @@ interface Options {
 ## Time-frame to Milliseconds
 
 ```js
-ms('1 day') === 86400000
-ms('3m 34s') === 214000
-ms(ms('1d - 4h')) === '20 hours'
-ms(ms('7d / 7')) === '1 day'
-ms('1 meneti', 'mi') === 60000
+ms('1 day') === 86400000;
+ms('3m 34s') === 214000;
+ms(ms('1d - 4h')) === '20 hours';
+ms(ms('7d / 7')) === '1 day';
+ms('1 meneti', 'mi') === 60000;
 ```
 
 ## Milliseconds to Time-frame
 
- ```js
-ms(123456) === '2 minutes and 3 seconds'
+```js
+ms(123456) === '2 minutes and 3 seconds';
 
-ms(123456, { shortFormat: true }) === '2m 3s'
-ms(123456, { roundUp: true }) === '2 minutes'
-ms(123456, { includeMs: true }) === '2 minutes 3 seconds and 456 milliseconds'
-ms(123.456, { includeSubMs: true }) === '123 milliseconds and 456 microseconds'
+ms(123456, { shortFormat: true }) === '2m 3s';
+ms(123456, { roundUp: true }) === '2 minutes';
+ms(123456, { includeMs: true }) === '2 minutes 3 seconds and 456 milliseconds';
+ms(123.456, { includeSubMs: true }) === '123 milliseconds and 456 microseconds';
 
-ms(123456, 'mi') === '2 meneti me te 3 hēkona'
-ms(123456, 'mi', { roundUp: true }) === '2 meneti'
-ms(123.456, 'mi', { includeSubMs: true }) === '123 manomano hēkona me te 456 moroiti hēkona'
+ms(123456, 'mi') === '2 meneti me te 3 hēkona';
+ms(123456, 'mi', { roundUp: true }) === '2 meneti';
+ms(123.456, 'mi', { includeSubMs: true }) === '123 manomano hēkona me te 456 moroiti hēkona';
 ```
 
 ## Set Global Options
 
 ```js
-ms(1234567) === '20 minutes and 34 seconds'
-ms({ roundUp: true }) instanceof Function
-ms(1234567) === '21 minutes'
+ms(1234567) === '20 minutes and 34 seconds';
+ms({ roundUp: true }) instanceof Function;
+ms(1234567) === '21 minutes';
 ```
 
 ## Set Global Language
 
 ```js
-ms(1000) === '1 second'
-ms('mi') instanceof Function
-ms(1000) === '1 hēkona'
+ms(1000) === '1 second';
+ms('mi') instanceof Function;
+ms(1000) === '1 hēkona';
 ```
