@@ -70,7 +70,7 @@ export default {
         {
             key: 'kyr',
             long: c => (c === 1 ? 'Jahrtausend' : 'Jahrtausende'),
-            short: 'Jt',
+            short: 'Jt.',
             matches: ['jt', 'jtd', 'jtsd', 'jahrt', 'jahrtausend', 'jahrtausende'],
         },
     ],
