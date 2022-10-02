@@ -1,38 +1,22 @@
-const ms = require('../')('mi');
-// const ms = require('enhanced-ms')('mi');
+const ms = require('../dist')('mi');
+// const ms = require('enhanced-ms')('en');
 
-test('convert single time units', () => {
+test('convert from string to number', () => {
     expect(ms('1 meneti')).toBe(60000);
-    expect(ms('5 meneti')).toBe(60000 * 5);
 
-    expect(ms('3 ra')).toBe(86400000 * 3);
-    expect(ms('13 ra')).toBe(86400000 * 13);
+    expect(ms('3 haora')).toBe(3 * 3.6e6);
 
-    expect(ms('4 tau')).toBe(31536000000 * 4);
-    expect(ms('1 tau')).toBe(31536000000);
+    expect(ms('4 haora + 60 meneti')).toBe(5 * 3.6e6);
+
+    expect(ms('1 rā + 1 ra + 5 rā - wiki')).toBe(0);
 });
 
-test('convert multiple time units', () => {
-    expect(ms('2 haora 34 meneti')).toBe(9240000);
-    expect(ms('2 haora 34 meneti')).toBe(9240000);
+test('convert from number to string', () => {
+    expect(ms(123456789)).toBe('1 rā 10 haora 17 meneti me te 36 hēkona');
 
-    expect(ms('1 ra 34 haora')).toBe(208800000);
-    expect(ms('1 ra 34 haora')).toBe(208800000);
+    expect(ms(91000, { roundUp: true })).toBe('2 meneti');
 
-    expect(ms('1 tau 365 ra')).toBe(ms('2y', 'en'));
-    expect(ms('1 tau 365 ra')).toBe(ms('2y', 'en'));
-});
-
-test('math inside time units', () => {
-    expect(ms('4 haora + 60 meneti')).toBe(ms('5h', 'en'));
-    expect(ms('1 ra '.repeat(7))).toBe(ms('7d', 'en'));
-
-    expect(ms('1 ra - 4 haora')).toBe(ms('20h', 'en'));
-    expect(ms('1 haora - 4 haora')).toBe(ms('-3h', 'en'));
-
-    expect(ms('7 ra / 7')).toBe(ms('1d', 'en'));
-    expect(ms('365 ra / 365')).toBe(ms('1d', 'en'));
-
-    expect(ms('24 haora * 7')).toBe(ms('7d', 'en'));
-    expect(ms('1000 nano hēkona * 1000')).toBe(ms('1ms', 'en'));
+    expect(ms(1111.111111, { includeSubMs: true })).toBe(
+        '1 hēkona 111 manomano hēkona 111 moroiti hēkona me te 111 nano hēkona'
+    );
 });
