@@ -94,6 +94,7 @@ The currently supported languages include:
 | :------: | :---: |
 | English  |  en   |
 |  Māori   |  mi   |
+|  German  |  de   |
 
 You can help by adding support for more languages.
 
