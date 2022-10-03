@@ -4,6 +4,7 @@ import { defaultLanguageOptions, LanguageOptions } from './languages';
 export interface NumberifyOptions {}
 export const defaultNumberifyOptions: NumberifyOptions = {};
 
+/** Check if a string is a math operator */
 function isOperator(v: unknown): v is '-' | '+' | '*' | '/' {
     return (
         !!v &&
@@ -13,6 +14,7 @@ function isOperator(v: unknown): v is '-' | '+' | '*' | '/' {
     );
 }
 
+/** Check if a string is a bracket */
 function isBracket(v: unknown): v is '(' | ')' {
     return !!v && typeof v === 'string' && v.length === 1 && (v === '(' || v === ')');
 }
@@ -34,14 +36,18 @@ export default function (
         if (isOperator(match) || isBracket(match)) finalCode.push(match);
         else if (/[0-9 ,.]/.test(match)) {
             if (!isOperator(prev)) finalCode.push('+');
+
+            // If this number is used with a unit, ensure order of operations
             if (language.units[next]) finalCode.push('(');
+
             const value = match
-                .replaceAll(language.thousands, '')
-                .replaceAll(language.decimal, '.');
+                .replaceAll(language.thousandsSeparator, '')
+                .replaceAll(language.decimalSeparator, '.');
             finalCode.push(value);
         } else {
             const unit = language.units[match];
             if (!isObject(unit)) continue;
+
             if (!isOperator(prev)) finalCode.push('*');
             finalCode.push(unit.ms + '');
             if (/[0-9.]/.test(prev)) finalCode.push(')');

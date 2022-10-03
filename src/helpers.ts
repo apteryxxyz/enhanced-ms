@@ -1,16 +1,16 @@
 import type { Unit } from './languages';
 
-/** Check that an value is an object. */
+/** Check that a value is an object. */
 export function isObject(value: unknown): value is object {
     return !!value && typeof value === 'object' && !Array.isArray(value);
 }
 
-/** Check that an value is a string. */
+/** Check that a value is a string. */
 export function isString(value: unknown): value is string {
     return typeof value === 'string' || value instanceof String;
 }
 
-/** Check that an value is a number. */
+/** Check that a value is a number. */
 export function isNumber(value: unknown): value is number {
     return !Number.isNaN(value) && Number.isFinite(value);
 }
@@ -33,11 +33,11 @@ export function crossModulo(divident: number, divisor: number) {
 
 /** Pluraluse a unit */
 export function pluraliseUnit(unit: Unit, count: number, compact: boolean) {
-    const short = unit.short
-        ? typeof unit.short === 'string'
-            ? unit.short
-            : unit.short(Math.abs(count))
+    const abbreviation = unit.abbreviation
+        ? typeof unit.abbreviation === 'string'
+            ? unit.abbreviation
+            : unit.abbreviation(Math.abs(count))
         : (compact = false);
-    const long = typeof unit.long === 'string' ? unit.long : unit.long(Math.abs(count));
-    return compact ? short : long;
+    const name = typeof unit.name === 'string' ? unit.name : unit.name(Math.abs(count));
+    return compact ? abbreviation : name;
 }

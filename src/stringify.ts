@@ -59,7 +59,7 @@ export default function (
     let firstFinal = 0;
 
     const useCompact = options.roundUp === true;
-    const hasShort = 'short' in language && language.short;
+    const hasShort = language.supportsAbbreviations === true;
     if (options.shortFormat && !hasShort) options.shortFormat = false;
     const useShort = options.shortFormat === true && hasShort;
 
@@ -74,23 +74,25 @@ export default function (
                 firstUnit = unit;
                 continue;
             } else {
+                // Round the units up
                 if (amount * unit.ms > firstUnit.ms / 2) firstFinal += 1;
                 if (i < timeEntries.length - 1) continue;
             }
 
             const plural = pluraliseUnit(firstUnit, firstFinal, useShort);
-            return `${Math.abs(firstFinal)}${useShort ? '' : ' '}${plural}`;
+            return `${Math.abs(firstFinal).toLocaleString()}${useShort ? '' : ' '}${plural}`;
         }
 
         const plural = pluraliseUnit(unit, amount, useShort);
-        finalString.push(`${Math.abs(amount)}${useShort ? '' : ' '}${plural}`);
+        finalString.push(`${Math.abs(amount).toLocaleString()}${useShort ? '' : ' '}${plural}`);
     }
 
     if (finalString.length === 0) return null;
 
     if (useShort === false && finalString.length > 1) {
+        // Add 'and' if using long format
         const lastItem = finalString.pop();
-        finalString.push(language.and);
+        finalString.push(language.andValue);
         finalString.push(lastItem);
     }
 

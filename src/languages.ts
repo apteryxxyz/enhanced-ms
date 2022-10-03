@@ -10,9 +10,9 @@ export interface Unit {
     /** Key to identify this unit */
     key: keyof typeof measurements;
     /** Long form of the measurement */
-    long: string | ((count: number) => string);
+    name: string | ((count: number) => string);
     /** Short form of the measurement */
-    short?: string | ((count: number) => string);
+    abbreviation?: string | ((count: number) => string);
     /** Strings used for the string regex */
     matches: string[];
 }
@@ -30,13 +30,13 @@ export interface LanguageOptions {
     /** The key for the selected language */
     key: LanguageKey;
     /** The decimal separator the language uses */
-    decimal: string;
+    decimalSeparator: string;
     /** The thousands separator the language uses */
-    thousands: string;
+    thousandsSeparator: string;
     /** The version of 'and' in the language */
-    and: string;
+    andValue: string;
     /** Whether the language has full short support */
-    short: boolean;
+    supportsAbbreviations: boolean;
     /** The regex to match lengths of time */
     regex: RegExp;
     /** The units and their names in the language, as a map */
@@ -62,7 +62,7 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
 
     const regex = new RegExp(
         '([-+*/]+|' + // Operators
-            '[()]|' +
+            '[()]|' + // Brackets
             `(?![${decimal}${thousands}])` + // Dont match single .,
             `[\\d${decimal}${thousands}]+|` + // Numbers
             language.units // Units
@@ -85,10 +85,10 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
 
     return {
         key,
-        decimal,
-        thousands,
-        and: language.and,
-        short: language.units.every(u => u.short),
+        decimalSeparator: decimal,
+        thousandsSeparator: thousands,
+        andValue: language.and,
+        supportsAbbreviations: language.units.every(u => u.abbreviation),
         regex,
         units,
     };

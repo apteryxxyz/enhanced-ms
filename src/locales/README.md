@@ -11,8 +11,8 @@ export interface Language {
 
 export interface Unit {
     key: keyof typeof measurements;
-    long: string | ((count: number) => string);
-    short?: string | ((count: number) => string);
+    name: string | ((count: number) => string);
+    abbreviation?: string | ((count: number) => string);
     matches: string[];
 }
 ```
@@ -29,9 +29,9 @@ export interface Unit {
 
 -   `key` is used for the module to identify which unit this is, it should the English short name. For example 'ms', 's', 'm', 'h' etc. You can view the existing translations for more examples.
 
--   `long` is the long name for this unit in the language, it can either be a string, or a function that returns a string, where the `count` parameter is the unit amount, any number above 0.
+-   `name` is the actual name of the unit in the language, it can either be a string, or a function that returns a string, where the `count` parameter is the unit amount, any number above 0.
 
--   `short` is the short name for the unit. It is optional however if one unit is missing its short property all units shorts will be ignored. Same as `long` it can either be a short or a function.
+-   `abbreviation` is the short name of for the unit. It is optional, however if any of the units are missing its `abbreviation` property, all unit abbreviations will be ignored, disabling use of `shortFormat: true`. Like `name`, this can be either a string or a function.
 
 -   `matches` should be an array of strings that the module will use to find matches in the string inputs. The array should contain any variation of the unit name. For example, in English, 'y', 'yr' and 'year' are all ways of representing a year.
 
