@@ -88,7 +88,7 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
         decimal,
         thousands,
         and: language.and,
-        short: language.units.some(u => u.short),
+        short: language.units.every(u => u.short),
         regex,
         units,
     };
