@@ -1,5 +1,7 @@
-export default {
-    ns: 0.000001,
+/* eslint id-length: 0 */
+
+export const measurements = {
+    ns: 0.000_001,
     us: 0.001,
     ms: 1,
     s: 1_000,

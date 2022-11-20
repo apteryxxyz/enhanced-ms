@@ -1,16 +1,19 @@
+/* eslint id-length: 0 */
+
 import { crossModulo, isNumber, pluraliseUnit } from './helpers';
-import { defaultLanguageOptions, LanguageOptions } from './languages';
-import measurements from './measurements';
+import type { LanguageOptions } from './languages';
+import { defaultLanguageOptions } from './languages';
+import { measurements } from './measurements';
 
 export interface StringifyOptions {
     /** Include milliseconds in the output */
     includeMs?: boolean;
     /** Include sub milliseconds in the output */
     includeSubMs?: boolean;
-    /** Use the short names of measurements */
-    shortFormat?: boolean;
     /** Round the result to the highest unit */
     roundUp?: boolean;
+    /** Use the short names of measurements */
+    shortFormat?: boolean;
 }
 
 export const defaultStringifyOptions: StringifyOptions = {
@@ -27,23 +30,23 @@ function parseTime(input: number, includeMs?: boolean, includeSubMs?: boolean) {
     const round = input > 0 ? Math.floor : Math.ceil;
 
     const parsed: Record<string, number> = {
-        y: round(input / measurements['y']),
-        d: crossModulo(round(input / measurements['d']), 365),
-        h: crossModulo(round(input / measurements['h']), 24),
-        m: crossModulo(round(input / measurements['m']), 60),
-        s: crossModulo(round(input / measurements['s']), 60),
+        y: round(input / measurements.y),
+        d: crossModulo(round(input / measurements.d), 365),
+        h: crossModulo(round(input / measurements.h), 24),
+        m: crossModulo(round(input / measurements.m), 60),
+        s: crossModulo(round(input / measurements.s), 60),
     };
 
-    if (includeMs) parsed['ms'] = crossModulo(round(input), 1000);
+    if (includeMs) parsed['ms'] = crossModulo(round(input), 1_000);
     if (includeSubMs) {
-        parsed['us'] = crossModulo(round(input / measurements['us']), 1000);
-        parsed['ns'] = crossModulo(round(input / measurements['ns']), 1000);
+        parsed['us'] = crossModulo(round(input / measurements.us), 1_000);
+        parsed['ns'] = crossModulo(round(input / measurements.ns), 1_000);
     }
 
     return parsed;
 }
 
-export default function (
+export default function stringify(
     input: number,
     options: StringifyOptions = defaultStringifyOptions,
     language: LanguageOptions = defaultLanguageOptions

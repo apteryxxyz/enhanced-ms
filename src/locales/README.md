@@ -27,7 +27,7 @@ export interface Unit {
 
 ## Unit Interface
 
--   `key` is used for the module to identify which unit this is, it should the English short name. For example 'ms', 's', 'm', 'h' etc. You can view the existing translations for more examples.
+-   `key` is used by the module to identify which unit this is, it should be the English abbreviation. For example 'ms', 's', 'm', 'h' etc. You can view the existing translations for more examples.
 
 -   `name` is the actual name of the unit in the language, it can either be a string, or a function that returns a string, where the `count` parameter is the unit amount, any number above 0.
 

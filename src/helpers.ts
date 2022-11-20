@@ -2,7 +2,7 @@ import type { Unit } from './languages';
 
 /** Check that a value is an object. */
 export function isObject(value: unknown): value is object {
-    return !!value && typeof value === 'object' && !Array.isArray(value);
+    return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
 /** Check that a value is a string. */
@@ -28,6 +28,7 @@ export function crossModulo(divident: number, divisor: number) {
         );
         EMIT_BIGINT_WARNING = false;
     }
+
     return divident % divisor;
 }
 

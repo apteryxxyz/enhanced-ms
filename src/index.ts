@@ -1,13 +1,14 @@
+/* eslint @typescript-eslint/unified-signatures: 0 */
+
 import { isNumber, isObject, isString } from './helpers';
-import {
-    defaultLanguageOptions,
-    isLanguageKey,
-    LanguageKey,
-    makeLanguageOptions,
-} from './languages';
-import numberify, { defaultNumberifyOptions, NumberifyOptions } from './numberify';
-import stringify, { defaultStringifyOptions, StringifyOptions } from './stringify';
-export type Options = StringifyOptions & NumberifyOptions;
+import type { LanguageKey } from './languages';
+import { defaultLanguageOptions, isLanguageKey, makeLanguageOptions } from './languages';
+import type { NumberifyOptions } from './numberify';
+import numberify, { defaultNumberifyOptions } from './numberify';
+import type { StringifyOptions } from './stringify';
+import stringify, { defaultStringifyOptions } from './stringify';
+
+export type Options = NumberifyOptions & StringifyOptions;
 
 function formatOptions(options: Options, defaultOptions: Options) {
     return {
@@ -35,7 +36,7 @@ let LANGUAGE_OPTIONS = defaultLanguageOptions;
  * ms('1 meneti', 'mi') === 60000
  * ```
  */
-function ms(
+export function ms(
     value1: string,
     value2?: LanguageKey | Options,
     value3?: Options
@@ -55,7 +56,7 @@ function ms(
  * ms(123456, 'mi') === '2 meneti me te 3 hēkona'
  * ```
  */
-function ms(
+export function ms(
     value1: number,
     value2?: LanguageKey | Options,
     value3?: Options
@@ -70,7 +71,7 @@ function ms(
  * ms(1000) === '1 hēkona'
  * ```
  */
-function ms(value1: LanguageKey): typeof ms;
+export function ms(value1: LanguageKey): typeof ms;
 /**
  * Set the global options.
  * @param value1 Options object
@@ -82,12 +83,12 @@ function ms(value1: LanguageKey): typeof ms;
  * ms(1234567) === '21 minutes'
  * ```
  */
-function ms(value1: Options): typeof ms;
-function ms(
-    value1?: string | number | LanguageKey | Options,
+export function ms(value1: Options): typeof ms;
+export function ms(
+    value1?: LanguageKey | Options | number | string,
     value2?: LanguageKey | Options,
     value3?: Options
-): number | string | null | typeof ms {
+): number | string | typeof ms | null {
     let options = DEFAULT_OPTIONS;
     let language = LANGUAGE_OPTIONS;
 
@@ -124,5 +125,7 @@ function ms(
 
 export default ms;
 
+// Consistent imports between ESM and TypeScript to CJS
 module.exports = ms;
+module.exports.ms = ms;
 module.exports.default = ms;

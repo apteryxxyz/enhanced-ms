@@ -17,28 +17,28 @@
 
 ## Features
 
--   Localisation support!
--   Convert from milliseconds to time-frame
--   Convert from time-frame to milliseconds
--   Operator in time-frame support
--   Customisable outputs
+- Localisation support!
+- Convert from milliseconds to time-frame
+- Convert from time-frame to milliseconds
+- Operator in time-frame support
+- Customisable outputs
 
 # 🏓 Table of Contents
 
--   [🤔 About](#-about)
-    -   [Features](#features)
--   [🏓 Table of Contents](#-table-of-contents)
--   [📩 Installation](#-installation)
--   [🧭 Comparison](#-comparison)
--   [🌐 Languages](#-languages)
--   [🍕 API](#-api)
-    -   [Conversion](#conversion)
-    -   [Globals](#globals)
--   [🌀 Examples](#-examples)
-    -   [Time-frame to Milliseconds](#time-frame-to-milliseconds)
-    -   [Milliseconds to Time-frame](#milliseconds-to-time-frame)
-    -   [Set Global Options](#set-global-options)
-    -   [Set Global Language](#set-global-language)
+- [🤔 About](#-about)
+  - [Features](#features)
+- [🏓 Table of Contents](#-table-of-contents)
+- [📩 Installation](#-installation)
+- [🧭 Comparison](#-comparison)
+- [🌐 Languages](#-languages)
+- [🍕 API](#-api)
+  - [Conversion](#conversion)
+  - [Globals](#globals)
+- [🌀 Examples](#-examples)
+  - [Time-frame to Milliseconds](#time-frame-to-milliseconds)
+  - [Milliseconds to Time-frame](#milliseconds-to-time-frame)
+  - [Set Global Options](#set-global-options)
+  - [Set Global Language](#set-global-language)
 
 # 📩 Installation
 
@@ -98,7 +98,7 @@ The currently supported languages include:
 
 You can help by adding support for more languages.
 
-Make a pull request [here](https://github.com/apteryxxyz/enhanced-ms).
+Make a pull request [here](https://github.com/apteryxxyz/enhanced-ms/tree/main/src/locales).
 
 # 🍕 API
 
@@ -112,7 +112,7 @@ If no time units were found within the string, `null` will be returned.
 function ms(value1: string, value2?: LanguageKey | Options, value3?: Options): number | null;
 ```
 
-However then the first parameter is a number it will be converted into a time-frame string.
+However when the first parameter is a number it will be converted into a time-frame string.
 
 If no time units were outputted (for example then the inputted number is less than `1000` and `includeMs` is `false`), `null` will be returned.
 
@@ -120,7 +120,7 @@ If no time units were outputted (for example then the inputted number is less th
 function ms(value1: number, value2?: LanguageKey | Options, value3?: Options): string | null;
 ```
 
-For both of the above overloads, the second parameter can either be the language key, or the options object. The third and final parameter is only ever used if no language key was supplied.
+For both of the above overloads, the second parameter can either be the language key, or the options object. The third and final parameter is only ever used if a language key is supplied.
 
 ## Globals
 
@@ -150,7 +150,7 @@ For `LanguageKey`, navigate to [🌐 Languages](#-languages).
 interface Options {
     /** Include milliseconds in the output */
     includeMs?: boolean;
-    /** Include sub milliseconds in the output */
+    /** Include micro and nano seconds in the output */
     includeSubMs?: boolean;
     /** Use the short names of measurements */
     shortFormat?: boolean;

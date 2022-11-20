@@ -1,44 +1,43 @@
-import measurements from './measurements';
-
+import de from './locales/de';
 import en from './locales/en';
 import mi from './locales/mi';
-import de from './locales/de';
-const languages = { en, mi, de };
-export default languages;
+import { measurements } from './measurements';
+
+export const languages = { en, mi, de };
 
 export interface Unit {
-    /** Key to identify this unit */
-    key: keyof typeof measurements;
-    /** Long form of the measurement */
-    name: string | ((count: number) => string);
     /** Short form of the measurement */
     abbreviation?: string | ((count: number) => string);
+    /** Key to identify this unit */
+    key: keyof typeof measurements;
     /** Strings used for the string regex */
     matches: string[];
+    /** Long form of the measurement */
+    name: string | ((count: number) => string);
 }
 
 export interface Language {
-    /** The decimal separator this language uses */
-    decimal: '.' | ',';
     /** The version of 'and' in this language */
     and: string;
+    /** The decimal separator this language uses */
+    decimal: ',' | '.';
     /** Measurement units */
     units: Unit[];
 }
 
 export interface LanguageOptions {
-    /** The key for the selected language */
-    key: LanguageKey;
-    /** The decimal separator the language uses */
-    decimalSeparator: string;
-    /** The thousands separator the language uses */
-    thousandsSeparator: string;
     /** The version of 'and' in the language */
     andValue: string;
-    /** Whether the language has full short support */
-    supportsAbbreviations: boolean;
+    /** The decimal separator the language uses */
+    decimalSeparator: string;
+    /** The key for the selected language */
+    key: LanguageKey;
     /** The regex to match lengths of time */
     regex: RegExp;
+    /** Whether the language has full short support */
+    supportsAbbreviations: boolean;
+    /** The thousands separator the language uses */
+    thousandsSeparator: string;
     /** The units and their names in the language, as a map */
     units: Record<string, Unit & { ms: number }>;
 }
@@ -66,8 +65,7 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
             `(?![${decimal}${thousands}])` + // Dont match single .,
             `[\\d${decimal}${thousands}]+|` + // Numbers
             language.units // Units
-                .map(u => u.matches)
-                .flat()
+                .flatMap(({ matches }) => matches)
                 .sort((a, b) => b.length - a.length)
                 .join('|') +
             ')',
@@ -77,18 +75,18 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
     // Turn the units array into a map where every key is a match
     // This saves having to 'find' a match manually
     // `units.find(u => u.matches.includes(value))` vs `units[value]`
-    const units = language.units.reduce((all, cur) => {
+    const units = language.units.reduce<LanguageOptions['units']>((all, cur) => {
         for (const match of [...cur.matches, cur.key])
             all[match] = Object.assign(cur, { ms: measurements[cur.key] });
         return all;
-    }, {} as LanguageOptions['units']);
+    }, {});
 
     return {
         key,
         decimalSeparator: decimal,
         thousandsSeparator: thousands,
         andValue: language.and,
-        supportsAbbreviations: language.units.every(u => u.abbreviation),
+        supportsAbbreviations: language.units.every(unit => unit.abbreviation),
         regex,
         units,
     };
