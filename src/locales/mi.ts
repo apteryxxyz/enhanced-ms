@@ -2,23 +2,33 @@ import type { Language } from '../languages';
 
 export default {
     decimal: '.',
-    and: 'me te',
+    and: 'me te', // me ngā (plural)
 
     units: [
         {
             key: 'ns',
-            name: 'nano hēkona',
-            matches: ['nano hēkona', 'nanohēkona', 'nano hekona', 'nanohekona'],
+            name: 'hēkona nanomiri',
+            matches: [
+                'hēkona nanomiri',
+                'hēkonananomiri',
+                'hekona nanomiri',
+                'hekonananomiri',
+            ],
         },
         {
             key: 'us',
-            name: 'moroiti hēkona',
-            matches: ['moroiti hēkona', 'moroitihēkona', 'moroiti hekona', 'moroitihekona'],
+            name: 'hēkona miriona',
+            matches: [
+                'hēkona miriona',
+                'hēkonamiriona',
+                'hekona miriona',
+                'hekonamiriona',
+            ],
         },
         {
             key: 'ms',
-            name: 'manomano hēkona',
-            matches: ['manomano hēkona', 'manomanohēkona', 'manomano hekona', 'manomanohekona'],
+            name: 'hēkona miri',
+            matches: ['hēkona miri', 'kākonamiri', 'hekona miri', 'hekonamiri'],
         },
         {
             key: 's',
@@ -32,8 +42,8 @@ export default {
         },
         {
             key: 'h',
-            name: 'haora',
-            matches: ['haora'],
+            name: 'hāora',
+            matches: ['hāora', 'haora'],
         },
         {
             key: 'd',
@@ -53,22 +63,22 @@ export default {
         {
             key: 'y',
             name: 'tau',
-            matches: ['tau'],
+            matches: ['tau', 'houanga'],
         },
         {
             key: 'dec',
             name: 'tekau tau',
-            matches: ['tekau tau', 'tekautau'],
+            matches: ['tekautau', 'tekau tau'],
         },
         {
             key: 'c',
             name: 'rau tau',
-            matches: ['rau tau', 'rautau'],
+            matches: ['rautau', 'rau tau'],
         },
         {
             key: 'kyr',
             name: 'mano tau',
-            matches: ['mano tau', 'manotau'],
+            matches: ['manotau', 'mano tau'],
         },
     ],
 } as Language;

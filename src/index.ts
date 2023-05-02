@@ -1,131 +1,197 @@
-/* eslint @typescript-eslint/unified-signatures: 0 */
-
-import { isNumber, isObject, isString } from './helpers';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { FormatOptions } from './format';
+import { defaultFormatOptions, format } from './format';
 import type { LanguageKey } from './languages';
-import { defaultLanguageOptions, isLanguageKey, makeLanguageOptions } from './languages';
-import type { NumberifyOptions } from './numberify';
-import numberify, { defaultNumberifyOptions } from './numberify';
-import type { StringifyOptions } from './stringify';
-import stringify, { defaultStringifyOptions } from './stringify';
+import {
+    isLanguageKey,
+    makeLanguageOptions,
+    resolveLanguageKey,
+} from './languages';
+import type { ParseOptions } from './parse';
+import { defaultParseOptions, parse } from './parse';
 
-export type Options = NumberifyOptions & StringifyOptions;
+export type CombinedOptions = FormatOptions & ParseOptions;
+export type UnionOptions = FormatOptions | ParseOptions;
 
-function formatOptions(options: Options, defaultOptions: Options) {
-    return {
-        ...defaultStringifyOptions,
-        ...defaultNumberifyOptions,
-        ...defaultOptions,
-        ...options,
-    } as Options;
-}
+const ms = (() => {
+    const Default = {
+        Options: formatOptions({}, {}),
+        LanguageKey: 'en' as LanguageKey,
+    };
 
-let DEFAULT_OPTIONS = formatOptions({}, {});
-let LANGUAGE_OPTIONS = defaultLanguageOptions;
+    /**
+     * Convert milliseconds to a human readable string.
+     * @param input Number of milliseconds.
+     * @param options Options for formatting.
+     * @example
+     * ms(13572468) // => '3 hours 46 minutes and 12 seconds'
+     *
+     * ms(13572468, { includeMs: true }) // => '3 hours 46 minutes 12 seconds and 468 milliseconds'
+     * ms(13572.468, { includeSubMs: true }) // => '13 seconds 572 milliseconds and 468 microseconds'
+     *
+     * ms(13572468, { roundUp: true }) // => '4 hours'
+     * ms(13572468, { shortFormat: true }) // => '3h 46m 12s'
+     * ms(13572468, { insertCommas: true }) // => '3 hours, 46 minutes, and 12 seconds'
+     */
+    function ms(
+        input: number,
+        options?: FormatOptions
+    ): ReturnType<typeof format>;
 
-/**
- * Convert a human readable time-frame string into milliseconds.
- * @param value1 String time-frame
- * @param value2 Language key **OR** options object
- * @param value3 Options object
- * @example
- * ```js
- * ms('1 day') === 86400000
- * ms('3m 34s') === 214000
- * ms(ms('1d - 4h')) === '20 hours'
- * ms(ms('7d / 7')) === '1 day'
- * ms('1 meneti', 'mi') === 60000
- * ```
- */
-export function ms(
-    value1: string,
-    value2?: LanguageKey | Options,
-    value3?: Options
-): ReturnType<typeof numberify>;
-/**
- * Convert a number of millseconds into a human readable string.
- * @param value1 Number of milliseconds
- * @param value2 Language key **OR** options object
- * @param value3 Options object
- * @example
- * ```js
- * ms(123456) === '2 minutes and 3 seconds'
- * ms(123456, { shortFormat: true }) === '2m 3s'
- * ms(123456, { roundUp: true }) === '2 minutes'
- * ms(123456, { includeMs: true }) === '2 minutes 3 seconds and 456 milliseconds'
- * ms(123.456, { includeSubMs: true }) === '123 milliseconds and 456 microseconds'
- * ms(123456, 'mi') === '2 meneti me te 3 hēkona'
- * ```
- */
-export function ms(
-    value1: number,
-    value2?: LanguageKey | Options,
-    value3?: Options
-): ReturnType<typeof stringify>;
-/**
- * Set the language for Enhanced MS to use.
- * @param value1 Language key
- * @returns The same function
- * ```js
- * ms(1000) === '1 second'
- * ms('mi') instanceof Function
- * ms(1000) === '1 hēkona'
- * ```
- */
-export function ms(value1: LanguageKey): typeof ms;
-/**
- * Set the global options.
- * @param value1 Options object
- * @returns This same function
- * @example
- * ```js
- * ms(1234567) === '20 minutes and 34 seconds'
- * ms({ roundUp: true }) instanceof Function
- * ms(1234567) === '21 minutes'
- * ```
- */
-export function ms(value1: Options): typeof ms;
-export function ms(
-    value1?: LanguageKey | Options | number | string,
-    value2?: LanguageKey | Options,
-    value3?: Options
-): number | string | typeof ms | null {
-    let options = DEFAULT_OPTIONS;
-    let language = LANGUAGE_OPTIONS;
+    /**
+     * Convert milliseconds to a human readable string.
+     * @param input Number of milliseconds.
+     * @param language Language key.
+     * @param options Options for formatting.
+     * @example
+     * ms(13572468, 'mi') // => '3 hāora 46 meneti me te 12 hēkona'
+     *
+     * ms(13572468, 'mi', { includeMs: true }) // => '3 hāora 46 meneti 12 hēkona me te 468 hēkona miri'
+     * ms(13572.468, 'mi', { includeSubMs: true }) // => '13 hēkona 572 hēkona miri me te 468 hēkona miriona'
+     *
+     * ms(13572468, 'mi', { roundUp: true }) // => '4 hāora'
+     * ms(13572468, 'mi', { shortFormat: true }) // => '3 hāora 46 meneti me te 12 hēkona'
+     * ms(13572468, 'mi', { insertCommas: true }) // => '3 hāora, 46 meneti, me te 12 hēkona'
+     */
+    function ms(
+        input: number,
+        language: LanguageKey,
+        options?: FormatOptions
+    ): ReturnType<typeof format>;
 
-    const firstIsObject = isObject(value1);
-    const secondIsObject = isObject(value2);
-    const thirdIsObject = isObject(value3);
+    /**
+     * Parse a human readable timeframe string to milliseconds.
+     * @param input Timeframe string.
+     * @param options Options for parsing.
+     * @example
+     * ms('2 seconds') // => 2000
+     * ms('2 minutes and 30 seconds') // => 150000
+     * ms('1.5 days and 1.5 hours') // => 135000000
+     *
+     * ms('2 hours - 30 minutes') // => 5400000
+     * ms('1 day * 365') // => 31536000000
+     * ms('1.5 days + 1.5 hours') // => 135000000
+     *
+     * ms('1 week - 3 days * 2') // => 86400000
+     * ms('(1 week - 3 days) * 2') // => 691200000
+     */
+    function ms(
+        input: string,
+        options?: ParseOptions
+    ): ReturnType<typeof parse>;
 
-    if (firstIsObject || secondIsObject || thirdIsObject) {
-        if (firstIsObject) {
-            DEFAULT_OPTIONS = formatOptions(value1, DEFAULT_OPTIONS);
-            return ms;
-        } else {
-            options = secondIsObject ? value2 : thirdIsObject ? value3 : DEFAULT_OPTIONS;
+    /**
+     * Parse a human readable timeframe string to milliseconds.
+     * @param input Timeframe string.
+     * @param language Language key.
+     * @param options Options for parsing.
+     * @example
+     * ms('2 hēkona') // => 2000
+     * ms('2 meneti me te 30 hēkona') // => 150000
+     * ms('1.5 ra me te 1.5 hāora') // => 135000000
+     *
+     * ms('2 hāora - 30 meneti') // => 5400000
+     * ms('1 rangi * 365') // => 31536000000
+     * ms('1.5 ra + 1.5 hāora') // => 135000000
+     *
+     * ms('1 wiki - 3 ra * 2') // => 86400000
+     * ms('(1 wiki - 3 ra) * 2') // => 691200000
+     */
+    function ms(
+        input: string,
+        language: LanguageKey,
+        options?: ParseOptions
+    ): ReturnType<typeof parse>;
+
+    /**
+     * Create a new instance with a new default language.
+     * @param language Language key.
+     * @example
+     * const ms = require('enhanced-ms')('mi');
+     * ms(2000) // => '2 hēkona'
+     * @example
+     * const ms = require('enhanced-ms');
+     * ms(2000) // => '2 seconds'
+     * const newMs = ms('mi');
+     * newMs(2000) // => '2 hēkona'
+     */
+    function ms(language: LanguageKey): typeof ms;
+
+    /**
+     * Create a new instance with new default options.
+     * @param options Options for parsing and formatting.
+     * @example
+     * const ms = require('enhanced-ms')({ roundUp: true });
+     * ms(13572468) // => '4 hours'
+     * @example
+     * const ms = require('enhanced-ms');
+     * ms(13572468) // => '3 hours 46 minutes and 12 seconds'
+     * const newMs = ms({ roundUp: true });
+     * newMs(13572468) // => '4 hours'
+     */
+    // eslint-disable-next-line @typescript-eslint/unified-signatures
+    function ms(options: CombinedOptions): typeof ms;
+
+    function ms(
+        arg1: CombinedOptions | LanguageKey | number | string,
+        arg2?: LanguageKey | UnionOptions,
+        arg3?: UnionOptions
+    ) {
+        const hasDefaultOptions = arg1 !== null && typeof arg1 === 'object';
+        const passOptions = resolveOptions(arg1, arg2, arg3) ?? Default.Options;
+        if (hasDefaultOptions) Default.Options = passOptions;
+
+        const hasDefaultLanguageKey = isLanguageKey(arg1);
+        const languageKey =
+            resolveLanguageKey(arg1, arg2) ?? Default.LanguageKey;
+        if (hasDefaultLanguageKey) Default.LanguageKey = languageKey;
+
+        if (hasDefaultOptions || hasDefaultLanguageKey) return ms;
+
+        const languageOptions = makeLanguageOptions(languageKey);
+        if (typeof arg1 === 'number') {
+            if (Number.isNaN(arg1) || !Number.isFinite(arg1))
+                throw new TypeError('Expected a valid number');
+            return format(arg1, passOptions, languageOptions);
+        } else if (typeof arg1 === 'string') {
+            return parse(arg1, passOptions, languageOptions);
         }
+
+        throw new TypeError('Invalid parameters');
     }
 
-    const firstIsLanguage = isString(value1) && isLanguageKey(value1);
-    const secondIsLanguage = isString(value2) && isLanguageKey(value2);
+    return ms;
+})();
 
-    if (firstIsLanguage || secondIsLanguage) {
-        if (firstIsLanguage) {
-            LANGUAGE_OPTIONS = makeLanguageOptions(value1);
-            return ms;
-        } else if (secondIsLanguage) {
-            language = makeLanguageOptions(value2);
-        }
-    }
-
-    if (isString(value1)) return numberify(value1, options, language);
-    if (isNumber(value1)) return stringify(value1, options, language);
-
-    throw new TypeError(`Invalid parameter(s)`);
-}
-
+export { ms };
 export default ms;
 
-// Consistent imports between ESM and TypeScript to CJS
+export { format, type FormatOptions } from './format';
+export { parse, type ParseOptions } from './parse';
+
+export { measurements, type MeasurementKey } from './measurements';
+export { languages, type LanguageKey } from './languages';
+
+// Support using "const ms = require('enhanced-ms');"
+const existing = module.exports;
 module.exports = ms;
-module.exports.ms = ms;
-module.exports.default = ms;
+Object.assign(module.exports, existing);
+
+function formatOptions(
+    defaultOptions: CombinedOptions,
+    passOptions?: CombinedOptions
+) {
+    return {
+        ...defaultFormatOptions,
+        ...defaultParseOptions,
+        ...defaultOptions,
+        ...passOptions,
+    };
+}
+
+function resolveOptions(...possibleOptions: unknown[]) {
+    for (const options of possibleOptions)
+        if (typeof options === 'object' && options !== null)
+            return options as CombinedOptions;
+    return undefined;
+}

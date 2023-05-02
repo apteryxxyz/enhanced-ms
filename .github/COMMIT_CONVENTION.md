@@ -18,10 +18,10 @@ Appears under "Features" header, `locales` subheader:
 feat(locales): add English locale
 ```
 
-Appears under "Bug Fixes" header, `numberify` subheader, with a link to issue #28:
+Appears under "Bug Fixes" header, `parse` subheader, with a link to issue #28:
 
 ```
-fix(numberify): number conversion
+fix(parse): number conversion
 
 close #28
 ```
@@ -68,7 +68,7 @@ Other prefixes are up to your discretion. Suggested prefixes are `docs`, `chore`
 
 ### Scope
 
-The scope could be anything specifying the place of the commit change. For example `numberify`, `stringify`, `locales` etc...
+The scope could be anything specifying the place of the commit change. For example `parse`, `format`, `locales` etc...
 
 ### Subject
 

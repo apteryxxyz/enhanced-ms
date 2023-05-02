@@ -1,6 +1,6 @@
 {
     "name": "enhanced-ms",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "license": "MIT",
     "description": "Convert human readable time-frame strings to milliseconds and vice versa, with support for i10n and operators!",
     "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
@@ -9,20 +9,20 @@
         "url": "https://apteryx.xyz"
     },
     "main": "./dist/index.js",
-    "exports": {
-        "require": "./dist/index.js",
-        "import": "./dist/index.mjs"
-    },
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "!dist/*.js.map"
     ],
     "scripts": {
-        "lint": "eslint src && prettier src --check",
+        "lint": "eslint src",
         "format": "eslint src --fix && prettier src --write",
         "test": "jest",
         "build:compile": "tsc && webpack && rimraf temp",
         "build:module": "gen-esm-wrapper . ./dist/index.mjs",
-        "build": "pnpm build:compile && pnpm build:module",
+        "build:fix-types": "node scripts/add-jsdoc.js",
+        "build": "pnpm build:compile && pnpm build:module && pnpm build:fix-types",
         "prepare": "husky install"
     },
     "repository": {
@@ -53,41 +53,39 @@
         "time"
     ],
     "devDependencies": {
-        "@babel/core": "^7.20.2",
-        "@babel/preset-env": "^7.20.2",
-        "@commitlint/cli": "^17.2.0",
-        "@commitlint/config-conventional": "^17.2.0",
+        "@babel/core": "^7.21.5",
+        "@babel/preset-env": "^7.21.5",
+        "@babel/preset-typescript": "^7.21.5",
+        "@commitlint/cli": "^17.6.1",
+        "@commitlint/config-conventional": "^17.6.1",
         "@rushstack/eslint-patch": "^1.2.0",
-        "@types/babel__core": "^7.1.20",
-        "@types/babel__preset-env": "^7.9.2",
-        "@types/node": "^18.11.9",
-        "@typescript-eslint/eslint-plugin": "^5.43.0",
-        "@typescript-eslint/parser": "^5.43.0",
-        "babel-loader": "^8.3.0",
+        "@types/node": "^18.16.3",
+        "@typescript-eslint/eslint-plugin": "^5.59.2",
+        "@typescript-eslint/parser": "^5.59.2",
+        "babel-loader": "^9.1.2",
+        "benchmark": "^2.1.4",
         "bundle-declarations-webpack-plugin": "^3.1.1",
-        "eslint": "^8.28.0",
-        "eslint-config-apteryx": "^2.0.2",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jsdoc": "^39.6.2",
-        "eslint-plugin-n": "^15.5.1",
+        "eslint": "^8.39.0",
+        "eslint-config-apteryx": "^2.0.6",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-jsdoc": "^41.1.2",
+        "eslint-plugin-n": "^15.7.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-promise": "^6.1.1",
-        "eslint-plugin-sonarjs": "^0.16.0",
-        "eslint-plugin-typescript-sort-keys": "^2.1.0",
-        "eslint-plugin-unicorn": "^44.0.2",
+        "eslint-plugin-sonarjs": "^0.19.0",
+        "eslint-plugin-typescript-sort-keys": "^2.3.0",
+        "eslint-plugin-unicorn": "^46.0.0",
         "gen-esm-wrapper": "^1.1.3",
-        "husky": "^8.0.2",
-        "jest": "^29.3.1",
-        "lint-staged": "^13.0.3",
-        "prettier": "^2.7.1",
-        "prettier-config-apteryx": "^2.0.2",
-        "pretty-quick": "^3.1.3",
-        "rimraf": "^3.0.2",
+        "husky": "^8.0.3",
+        "jest": "^29.5.0",
+        "prettier": "^2.8.8",
+        "prettier-config-apteryx": "^2.0.3",
+        "rimraf": "^5.0.0",
         "ts-config-apteryx": "^2.0.0",
-        "typescript": "^4.7.4",
-        "webpack": "^5.75.0",
-        "webpack-cli": "^4.10.0"
+        "typescript": "^5.0.4",
+        "webpack": "^5.81.0",
+        "webpack-cli": "^5.0.2"
     },
     "commitlint": {
         "extends": [
@@ -131,24 +129,7 @@
             "*.config.js"
         ],
         "rules": {
-            "@typescript-eslint/prefer-regexp-exec": "off",
-            "@typescript-eslint/no-implied-eval": "off",
-            "no-new-func": "off",
-            "id-length": [
-                "error",
-                {
-                    "min": 2,
-                    "exceptions": [
-                        "c",
-                        "a",
-                        "b",
-                        "i"
-                    ]
-                }
-            ]
+            "id-length": "off"
         }
-    },
-    "lint-staged": {
-        "src/**/*.ts": "eslint src --fix"
     }
 }

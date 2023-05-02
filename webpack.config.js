@@ -9,11 +9,15 @@ module.exports = {
         filename: 'index.js',
         library: {
             type: 'umd',
-            name: 'what',
+            name: 'ms',
         },
         globalObject: 'globalThis',
     },
     mode: 'production',
+    devtool: 'source-map',
+    resolve: {
+        extensions: ['.js', '.ts'],
+    },
     plugins: [
         new BundleDeclarationsWebpackPlugin({
             entry: ['src/index.ts'],
@@ -27,9 +31,6 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env'],
-                    },
                 },
             },
         ],

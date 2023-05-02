@@ -21,7 +21,7 @@ export default {
             key: 'ms',
             name: c => (c === 1 ? 'millisecond' : 'milliseconds'),
             abbreviation: 'ms',
-            matches: ['ms', 'millisecond', 'microseconds'],
+            matches: ['ms', 'millisecond', 'milliseconds'],
         },
         {
             key: 's',

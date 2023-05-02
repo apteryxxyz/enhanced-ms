@@ -18,7 +18,14 @@ export default {
         {
             key: 'ms',
             name: c => (c === 1 ? 'Millisekunde' : 'Millisekunden'),
-            matches: ['ms', 'ml', 'mi', 'millisekunde', 'millisekunden', 'millis'],
+            matches: [
+                'ms',
+                'ml',
+                'mi',
+                'millisekunde',
+                'millisekunden',
+                'millis',
+            ],
         },
         {
             key: 's',
@@ -71,7 +78,14 @@ export default {
             key: 'kyr',
             name: c => (c === 1 ? 'Jahrtausend' : 'Jahrtausende'),
             abbreviation: 'Jt.',
-            matches: ['jt', 'jtd', 'jtsd', 'jahrt', 'jahrtausend', 'jahrtausende'],
+            matches: [
+                'jt',
+                'jtd',
+                'jtsd',
+                'jahrt',
+                'jahrtausend',
+                'jahrtausende',
+            ],
         },
     ],
 } as Language;

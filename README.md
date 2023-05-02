@@ -109,7 +109,7 @@ When the first parameter is a string, the module will parse it and convert it in
 If no time units were found within the string, `null` will be returned.
 
 ```ts
-function ms(value1: string, value2?: LanguageKey | Options, value3?: Options): number | null;
+function ms(input: string, value2?: LanguageKey | Options, options?: Options): number | null;
 ```
 
 However when the first parameter is a number it will be converted into a time-frame string.
@@ -117,7 +117,7 @@ However when the first parameter is a number it will be converted into a time-fr
 If no time units were outputted (for example then the inputted number is less than `1000` and `includeMs` is `false`), `null` will be returned.
 
 ```ts
-function ms(value1: number, value2?: LanguageKey | Options, value3?: Options): string | null;
+function ms(input: number, value2?: LanguageKey | Options, options?: Options): string | null;
 ```
 
 For both of the above overloads, the second parameter can either be the language key, or the options object. The third and final parameter is only ever used if a language key is supplied.
@@ -129,11 +129,11 @@ If you prefer that the results always include in a different language, or if you
 The following will overwrite the modules defaults, you can find some examples further down.
 
 ```ts
-function ms(value1: LanguageKey): typeof ms;
+function ms(language: LanguageKey): typeof ms;
 ```
 
 ```ts
-function ms(value1: Options): typeof ms;
+function ms(options: Options): typeof ms;
 ```
 
 Both of these will return the `ms` function, which will allow you to do:
@@ -148,14 +148,16 @@ For `LanguageKey`, navigate to [🌐 Languages](#-languages).
 
 ```ts
 interface Options {
-    /** Include milliseconds in the output */
+    /** Include input in the output. */
     includeMs?: boolean;
-    /** Include micro and nano seconds in the output */
+    /** Include sub input in the output. */
     includeSubMs?: boolean;
-    /** Use the short names of measurements */
-    shortFormat?: boolean;
-    /** Round the result to the highest unit */
+    /** Insert commas inbetween each unit. */
+    insertCommas?: boolean;
+    /** Round the result to the highest unit. */
     roundUp?: boolean;
+    /** Use the short names of measurements. */
+    shortFormat?: boolean;
 }
 ```
 

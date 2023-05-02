@@ -1,20 +1,12 @@
 import de from './locales/de';
 import en from './locales/en';
 import mi from './locales/mi';
+import type { MeasurementKey } from './measurements';
 import { measurements } from './measurements';
 
 export const languages = { en, mi, de };
 
-export interface Unit {
-    /** Short form of the measurement */
-    abbreviation?: string | ((count: number) => string);
-    /** Key to identify this unit */
-    key: keyof typeof measurements;
-    /** Strings used for the string regex */
-    matches: string[];
-    /** Long form of the measurement */
-    name: string | ((count: number) => string);
-}
+export type LanguageKey = keyof typeof languages;
 
 export interface Language {
     /** The version of 'and' in this language */
@@ -23,6 +15,17 @@ export interface Language {
     decimal: ',' | '.';
     /** Measurement units */
     units: Unit[];
+}
+
+export interface Unit {
+    /** Short form of the measurement */
+    abbreviation?: string | ((count: number) => string);
+    /** Key to identify this unit */
+    key: MeasurementKey;
+    /** Strings used for the string regex */
+    matches: string[];
+    /** Long form of the measurement */
+    name: string | ((count: number) => string);
 }
 
 export interface LanguageOptions {
@@ -42,29 +45,33 @@ export interface LanguageOptions {
     units: Record<string, Unit & { ms: number }>;
 }
 
-export type LanguageKey = keyof typeof languages;
-
-/** Check that a string is a valid language key */
-export function isLanguageKey(value: string): value is LanguageKey {
-    return value in languages;
+/** Check if a value is a language key. */
+export function isLanguageKey(value: unknown): value is LanguageKey {
+    return typeof value === 'string' && value in languages;
 }
 
-const LANGUAGE_CACHE: Record<string, LanguageOptions> = {};
+/** Resolve a language key from a list of values */
+export function resolveLanguageKey(...keys: unknown[]) {
+    for (const key of keys) if (isLanguageKey(key)) return key;
+    return undefined;
+}
+
+const makeLanguageOptionsCache = new Map<LanguageKey, LanguageOptions>();
 
 /** Convert a language object into a object this module can utilitise */
 export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
-    if (LANGUAGE_CACHE[key]) return LANGUAGE_CACHE[key];
+    const cachedOptions = makeLanguageOptionsCache.get(key);
+    if (cachedOptions) return cachedOptions;
 
-    const language = languages[key];
-    const decimal = language.decimal;
-    const thousands = decimal === '.' ? ',' : '.';
-
+    const language: Language = languages[key];
+    const thousands = language.decimal === ',' ? '.' : ',';
     const regex = new RegExp(
-        '([-+*/]+|' + // Operators
+        '[-+*/]+|' + // Operators
             '[()]|' + // Brackets
-            `(?![${decimal}${thousands}])` + // Dont match single .,
-            `[\\d${decimal}${thousands}]+|` + // Numbers
-            language.units // Units
+            `(?![${language.decimal}${thousands}])` + // Dont match single .,
+            `[\\d${language.decimal}${thousands}]+|` + // Numbers
+            '(?<=\\s|\\d)(' +
+            language.units
                 .flatMap(({ matches }) => matches)
                 .sort((a, b) => b.length - a.length)
                 .join('|') +
@@ -75,21 +82,28 @@ export function makeLanguageOptions(key: LanguageKey): LanguageOptions {
     // Turn the units array into a map where every key is a match
     // This saves having to 'find' a match manually
     // `units.find(u => u.matches.includes(value))` vs `units[value]`
-    const units = language.units.reduce<LanguageOptions['units']>((all, cur) => {
-        for (const match of [...cur.matches, cur.key])
-            all[match] = Object.assign(cur, { ms: measurements[cur.key] });
-        return all;
-    }, {});
+    const units = language.units.reduce<LanguageOptions['units']>(
+        (all, cur) => {
+            for (const match of [...cur.matches, cur.key])
+                all[match] = Object.assign(cur, { ms: measurements[cur.key] });
+            return all;
+        },
+        {}
+    );
 
-    return {
+    const options = {
         key,
-        decimalSeparator: decimal,
+        decimalSeparator: language.decimal,
         thousandsSeparator: thousands,
         andValue: language.and,
         supportsAbbreviations: language.units.every(unit => unit.abbreviation),
         regex,
         units,
     };
+
+    makeLanguageOptionsCache.set(key, options);
+
+    return options;
 }
 
 /** The default language to use, in this case English */
