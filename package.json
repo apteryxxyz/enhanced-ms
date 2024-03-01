@@ -1,135 +1,92 @@
 {
-    "name": "enhanced-ms",
-    "version": "2.3.0",
-    "license": "MIT",
-    "description": "Convert human readable time-frame strings to milliseconds and vice versa, with support for i10n and operators!",
-    "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
-    "author": {
-        "name": "ApteryxXYZ",
-        "url": "https://apteryx.xyz"
+  "name": "enhanced-ms",
+  "version": "2.4.0-canary.1",
+  "license": "MIT",
+  "description": "Convert human readable time-frame strings to milliseconds and vice versa, with support for i10n and operators!",
+  "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
+  "author": {
+    "name": "ApteryxXYZ",
+    "url": "https://apteryx.xyz"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist",
-        "!dist/*.js.map"
-    ],
-    "scripts": {
-        "lint": "eslint src",
-        "format": "eslint src --fix && prettier src --write",
-        "test": "jest",
-        "build:compile": "tsc && webpack && rimraf temp",
-        "build:module": "gen-esm-wrapper . ./dist/index.mjs",
-        "build:fix-types": "node scripts/add-jsdoc.js",
-        "build": "pnpm build:compile && pnpm build:module && pnpm build:fix-types",
-        "prepare": "husky install"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/apteryxxyz/enhanced-ms"
-    },
-    "bugs": {
-        "url": "https://github.com/apteryxxyz/enhanced-ms/issues"
-    },
-    "keywords": [
-        "convert",
-        "duration",
-        "human",
-        "humanise",
-        "humanize",
-        "microseconds",
-        "milliseconds",
-        "ms",
-        "number",
-        "parse",
-        "period",
-        "pretty",
-        "print",
-        "range",
-        "readable",
-        "seconds",
-        "string",
-        "time"
-    ],
-    "devDependencies": {
-        "@babel/core": "^7.21.5",
-        "@babel/preset-env": "^7.21.5",
-        "@babel/preset-typescript": "^7.21.5",
-        "@commitlint/cli": "^17.6.1",
-        "@commitlint/config-conventional": "^17.6.1",
-        "@rushstack/eslint-patch": "^1.2.0",
-        "@types/node": "^18.16.3",
-        "@typescript-eslint/eslint-plugin": "^5.59.2",
-        "@typescript-eslint/parser": "^5.59.2",
-        "babel-loader": "^9.1.2",
-        "benchmark": "^2.1.4",
-        "bundle-declarations-webpack-plugin": "^3.1.1",
-        "eslint": "^8.39.0",
-        "eslint-config-apteryx": "^2.0.6",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-import": "^2.27.5",
-        "eslint-plugin-jsdoc": "^41.1.2",
-        "eslint-plugin-n": "^15.7.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-promise": "^6.1.1",
-        "eslint-plugin-sonarjs": "^0.19.0",
-        "eslint-plugin-typescript-sort-keys": "^2.3.0",
-        "eslint-plugin-unicorn": "^46.0.0",
-        "gen-esm-wrapper": "^1.1.3",
-        "husky": "^8.0.3",
-        "jest": "^29.5.0",
-        "prettier": "^2.8.8",
-        "prettier-config-apteryx": "^2.0.3",
-        "rimraf": "^5.0.0",
-        "ts-config-apteryx": "^2.0.0",
-        "typescript": "^5.0.4",
-        "webpack": "^5.81.0",
-        "webpack-cli": "^5.0.2"
-    },
-    "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ],
-        "rules": {
-            "type-enum": [
-                2,
-                "always",
-                [
-                    "build",
-                    "chore",
-                    "ci",
-                    "docs",
-                    "feat",
-                    "fix",
-                    "perf",
-                    "refactor",
-                    "revert",
-                    "style",
-                    "test",
-                    "types"
-                ]
-            ]
-        }
-    },
-    "prettier": "prettier-config-apteryx",
-    "eslintConfig": {
-        "extends": [
-            "apteryx/common",
-            "apteryx/typescript",
-            "apteryx/prettier"
-        ],
-        "ignorePatterns": [
-            "test/*",
-            "examples/*",
-            "scripts/*",
-            "dist/*",
-            "temp/*",
-            "_src/*",
-            "*.config.js"
-        ],
-        "rules": {
-            "id-length": "off"
-        }
+    "./package.json": {
+      "import": "./package.json",
+      "require": "./package.json"
     }
+  },
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "build": "tsup",
+    "test": "jest",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apteryxxyz/enhanced-ms"
+  },
+  "bugs": {
+    "url": "https://github.com/apteryxxyz/enhanced-ms/issues"
+  },
+  "keywords": [
+    "convert",
+    "duration",
+    "human",
+    "humanise",
+    "humanize",
+    "microseconds",
+    "milliseconds",
+    "ms",
+    "number",
+    "parse",
+    "period",
+    "pretty",
+    "print",
+    "range",
+    "readable",
+    "seconds",
+    "string",
+    "time"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "chore",
+          "ci",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "style",
+          "test",
+          "types"
+        ]
+      ]
+    }
+  }
 }

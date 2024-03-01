@@ -17,28 +17,11 @@
 
 ## Features
 
-- Localisation support!
+- Localisation support
 - Convert from milliseconds to time-frame
 - Convert from time-frame to milliseconds
 - Operator in time-frame support
 - Customisable outputs
-
-# 🏓 Table of Contents
-
-- [🤔 About](#-about)
-  - [Features](#features)
-- [🏓 Table of Contents](#-table-of-contents)
-- [📩 Installation](#-installation)
-- [🧭 Comparison](#-comparison)
-- [🌐 Languages](#-languages)
-- [🍕 API](#-api)
-  - [Conversion](#conversion)
-  - [Globals](#globals)
-- [🌀 Examples](#-examples)
-  - [Time-frame to Milliseconds](#time-frame-to-milliseconds)
-  - [Milliseconds to Time-frame](#milliseconds-to-time-frame)
-  - [Set Global Options](#set-global-options)
-  - [Set Global Language](#set-global-language)
 
 # 📩 Installation
 
