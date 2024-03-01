@@ -1,9 +1,51 @@
 {
-    "extends": "ts-config-apteryx",
-    "compilerOptions": {
-        "outDir": "./temp",
-        "target": "es2017"
-    },
-    "exclude": ["./node_modules/", "./dist/", "./**/_*/"],
-    "include": ["./src/**/*.ts"]
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "coverage", "test", "tests"],
+
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    "allowArbitraryExtensions": false,
+    "allowImportingTsExtensions": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true,
+
+    "declaration": true,
+    "declarationMap": true,
+    "importHelpers": false,
+    "newLine": "lf",
+    "noEmitHelpers": true,
+    "outDir": "dist",
+    "removeComments": false,
+    "sourceMap": true,
+
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    "experimentalDecorators": true,
+    "lib": ["ESNext", "DOM"],
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+
+    "baseUrl": "."
+  }
 }
