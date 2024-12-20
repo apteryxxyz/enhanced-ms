@@ -3,8 +3,9 @@ import { MeasurementKey, measurements } from './measurements';
 import de from './locales/de';
 import en from './locales/en';
 import mi from './locales/mi';
+import ru from './locales/ru';
 
-export const languages = { en, de, mi };
+export const languages = { en, de, mi, ru };
 export type LanguageKey = keyof typeof languages;
 /** Check if a value is a language key. */
 export function isLanguageKey(value: unknown): value is LanguageKey {
