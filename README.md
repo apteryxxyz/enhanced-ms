@@ -73,11 +73,12 @@ ems(3456787654, { shortFormat: true }); // -> '40d 13m 7s'
 
 The currently supported languages include:
 
-| Language | Key |
-| :------: | :-: |
-| English  | en  |
-|  German  | de  |
-|  Māori   | mi  |
+| Language  | Key |
+|:---------:|:---:|
+|  English  | en  |
+|  German   | de  |
+|   Māori   | mi  |
+|  Russian  | ru  |
 
 You can help by adding support for more languages.
 
