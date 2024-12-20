@@ -18,9 +18,6 @@ function formatTime(value: number, unit: string): string {
     };
 
     const words = units[unit as keyof typeof units];
-    if (!words) {
-        throw new Error(`Неизвестный формат времени: ${unit}`);
-    }
 
     const lastDigit = value % 10;
     const lastTwoDigits = value % 100;
