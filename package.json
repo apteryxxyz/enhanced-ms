@@ -1,6 +1,6 @@
 {
   "name": "enhanced-ms",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "MIT",
   "description": "Convert human readable time-frame strings to milliseconds and vice versa, with support for i10n and operators!",
   "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
