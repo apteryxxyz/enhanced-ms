@@ -1,92 +1,57 @@
 {
   "name": "enhanced-ms",
   "version": "3.1.0",
+  "packageManager": "pnpm@9.15.4",
+  "type": "module",
+  "description": "Convert milliseconds to human-readable duration strings and vice versa",
   "license": "MIT",
-  "description": "Convert human readable time-frame strings to milliseconds and vice versa, with support for i10n and operators!",
+  "keywords": [
+    "humanize",
+    "duration",
+    "ms",
+    "time",
+    "readable",
+    "format",
+    "parse",
+    "pretty",
+    "print"
+  ],
   "homepage": "https://github.com/apteryxxyz/enhanced-ms#readme",
-  "author": {
-    "name": "ApteryxXYZ",
-    "url": "https://apteryx.xyz"
-  },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./package.json": {
-      "import": "./package.json",
-      "require": "./package.json"
-    }
-  },
-  "scripts": {
-    "lint": "biome lint .",
-    "format": "biome format --write .",
-    "build": "tsup",
-    "test": "jest",
-    "prepare": "husky install"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apteryxxyz/enhanced-ms"
+    "url": "git+https://github.com/apteryxxyz/enhanced-ms.git"
   },
   "bugs": {
     "url": "https://github.com/apteryxxyz/enhanced-ms/issues"
   },
-  "keywords": [
-    "convert",
-    "duration",
-    "human",
-    "humanise",
-    "humanize",
-    "microseconds",
-    "milliseconds",
-    "ms",
-    "number",
-    "parse",
-    "period",
-    "pretty",
-    "print",
-    "range",
-    "readable",
-    "seconds",
-    "string",
-    "time"
-  ],
-  "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
-    "@commitlint/cli": "^19.0.3",
-    "@commitlint/config-conventional": "^19.0.3",
-    "husky": "^9.0.11",
-    "jest": "^29.7.0",
-    "tsup": "^8.0.2",
-    "typescript": "^5.3.3"
-  },
-  "commitlint": {
-    "extends": ["@commitlint/config-conventional"],
-    "rules": {
-      "type-enum": [
-        2,
-        "always",
-        [
-          "build",
-          "chore",
-          "ci",
-          "docs",
-          "feat",
-          "fix",
-          "perf",
-          "refactor",
-          "revert",
-          "style",
-          "test",
-          "types"
-        ]
-      ]
+  "files": ["dist"],
+  "main": "./dist/index.cjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "pretty": "biome check . --write",
+    "check": "tsc --noEmit",
+    "quality": "biome ci .",
+    "build": "tsup",
+    "dev": "tsup -w",
+    "test": "vitest --run",
+    "prepare": "husky",
+    "change": "changeset",
+    "release": "changeset version && pnpm pretty && pnpm build && changeset publish",
+    "release:snapshot": "changeset version --snapshot beta && pnpm pretty && pnpm build && changeset publish --tag beta --no-git-tag"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.12",
+    "husky": "^9.1.7",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.4"
   }
 }
