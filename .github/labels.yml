@@ -21,3 +21,6 @@
 - name: dependencies
   color: d93f0b
   description: Dependency updates!!
+
+- name: languages
+  color: 7e57c2

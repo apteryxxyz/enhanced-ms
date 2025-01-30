@@ -21,19 +21,6 @@
       "suspicious": {
         "noAssignInExpressions": "off",
         "noArrayIndexKey": "off"
-      },
-      "a11y": {
-        "useSemanticElements": "off",
-        "useFocusableInteractive": "off"
-      },
-      "nursery": {
-        "useSortedClasses": {
-          "level": "warn",
-          "options": {
-            "attributes": ["className"],
-            "functions": ["cn", "cva"]
-          }
-        }
       }
     }
   },

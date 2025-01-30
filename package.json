@@ -37,7 +37,7 @@
     "check": "tsc --noEmit",
     "quality": "biome ci .",
     "build": "tsup",
-    "dev": "tsup -w",
+    "dev": "tsup --watch",
     "test": "vitest --run",
     "prepare": "husky",
     "change": "changeset",
