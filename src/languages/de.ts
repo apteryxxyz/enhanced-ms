@@ -1,77 +1,74 @@
-import type { Language } from '../languages';
+// RIP @DEVTomatoCake
 
 export default {
   decimal: ',',
   and: 'und',
 
-  units: [
-    {
-      key: 'ns',
+  units: {
+    nanosecond: {
       name: (c) => (c === 1 ? 'Nanosekunde' : 'Nanosekunden'),
+      abbreviation: 'ns',
       matches: ['ns', 'nanos', 'nanosekunde', 'nanosekunden'],
     },
-    {
-      key: 'us',
+    microsecond: {
       name: (c) => (c === 1 ? 'Mikrosekunde' : 'Mikrosekunden'),
+      abbreviation: 'μs',
       matches: ['us', 'mk', 'mikrosekunde', 'mikrosekunden', 'mikros'],
     },
-    {
-      key: 'ms',
+    millisecond: {
       name: (c) => (c === 1 ? 'Millisekunde' : 'Millisekunden'),
+      abbreviation: 'ms',
       matches: ['ms', 'ml', 'mi', 'millisekunde', 'millisekunden', 'millis'],
     },
-    {
-      key: 's',
+    second: {
       name: (c) => (c === 1 ? 'Sekunde' : 'Sekunden'),
+      abbreviation: 'Sek.',
       matches: ['s', 'sekunde', 'sekunden', 'sek', 'seks'],
     },
-    {
-      key: 'm',
+    minute: {
       name: (c) => (c === 1 ? 'Minute' : 'Minuten'),
+      abbreviation: 'Min.',
       matches: ['m', 'minute', 'minuten', 'min', 'mins'],
     },
-    {
-      key: 'h',
+    hour: {
       name: (c) => (c === 1 ? 'Stunde' : 'Stunden'),
+      abbreviation: 'Std.',
       matches: ['h', 'stunde', 'stunden', 'st'],
     },
-    {
-      key: 'd',
+    day: {
       name: (c) => (c === 1 ? 'Tag' : 'Tage'),
+      abbreviation: 'T.',
       matches: ['d', 't', 'tag', 'tage'],
     },
-    {
-      key: 'w',
+    week: {
       name: (c) => (c === 1 ? 'Woche' : 'Wochen'),
+      abbreviation: 'W.',
       matches: ['w', 'wo', 'woche', 'wochen'],
     },
-    {
-      key: 'mo',
+    month: {
       name: (c) => (c === 1 ? 'Monat' : 'Monate'),
+      abbreviation: 'M.',
       matches: ['mo', 'monat', 'monate'],
     },
-    {
-      key: 'y',
+    year: {
       name: (c) => (c === 1 ? 'Jahr' : 'Jahre'),
+      abbreviation: 'J.',
       matches: ['y', 'a', 'j', 'jahr', 'jahre'],
     },
-    {
-      key: 'dec',
+    decade: {
       name: (c) => (c === 1 ? 'Jahrzehnt' : 'Jahrzehnte'),
       abbreviation: 'Jz.',
       matches: ['jz', 'jahrzehnt', 'jahrzehnte'],
     },
-    {
-      key: 'c',
+    century: {
       name: (c) => (c === 1 ? 'Jahrhundert' : 'Jahrhunderte'),
       abbreviation: 'Jh.',
       matches: ['c', 'jh', 'jhd', 'jahrhundert', 'jahrhunderte'],
     },
-    {
-      key: 'kyr',
+    millennium: {
       name: (c) => (c === 1 ? 'Jahrtausend' : 'Jahrtausende'),
       abbreviation: 'Jt.',
       matches: ['jt', 'jtd', 'jtsd', 'jahrt', 'jahrtausend', 'jahrtausende'],
     },
-  ],
-} as Language;
+  },
+} satisfies import('./helpers/definition-types').LanguageDefinition;
