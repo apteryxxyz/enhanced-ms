@@ -16,14 +16,11 @@ export interface FormatOptions {
   includeSubMs?: boolean;
 
   /**
-   * Specifies the format style of the output.
+   * Use abbreviated unit names instead of full names.
    *
-   * - `'short'`: Uses abbreviated units (e.g. `1d` for one day).
-   * - `'long'`: Uses full units (e.g. `1 day`).
-   *
-   * @default 'long'
+   * @default false
    */
-  formatStyle?: 'short' | 'long';
+  abbreviateUnits?: boolean;
 
   /**
    * Include the "and" value between the units.
@@ -82,7 +79,7 @@ export function resolveOptions(options: FormatOptions, language: Language) {
   let {
     includeMs,
     includeSubMs,
-    formatStyle,
+    abbreviateUnits,
     insertAnd,
     insertCommas,
     firstUnitOnly,
@@ -94,12 +91,8 @@ export function resolveOptions(options: FormatOptions, language: Language) {
     throw new Error('Invalid includeMs option');
   if (includeSubMs !== undefined && typeof includeSubMs !== 'boolean')
     throw new Error('Invalid includeSubMs option');
-  if (
-    formatStyle !== undefined &&
-    formatStyle !== 'short' &&
-    formatStyle !== 'long'
-  )
-    throw new Error('Invalid formatStyle option');
+  if (abbreviateUnits !== undefined && typeof abbreviateUnits !== 'boolean')
+    throw new Error('Invalid abbreviateUnits option');
   if (insertAnd !== undefined && typeof insertAnd !== 'boolean')
     throw new Error('Invalid insertAnd option');
   if (insertCommas !== undefined && typeof insertCommas !== 'boolean')
@@ -117,7 +110,7 @@ export function resolveOptions(options: FormatOptions, language: Language) {
     throw new Error('Invalid roundingStrategy option');
 
   // Validate language support
-  if (formatStyle === 'short' && !language.supportsAbbreviations)
+  if (abbreviateUnits && !language.supportsAbbreviations)
     throw new Error('Language does not support short format');
   if (insertAnd && !language.andValue)
     throw new Error('Language does not support "and" value');
@@ -141,7 +134,7 @@ export function resolveOptions(options: FormatOptions, language: Language) {
   return {
     includeMs: includeMs ?? false,
     includeSubMs: includeSubMs ?? false,
-    formatStyle: formatStyle ?? 'long',
+    abbreviateUnits: abbreviateUnits ?? false,
     insertAnd: insertAnd ?? false,
     insertCommas: insertCommas ?? false,
     firstUnitOnly: firstUnitOnly ?? false,

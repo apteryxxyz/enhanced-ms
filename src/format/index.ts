@@ -67,7 +67,7 @@ export function formatMilliseconds(
 
   // ===== Formatting ===== //
 
-  const { formatStyle /*, showCount */ } = resolvedOptions;
+  const { abbreviateUnits /*, showCount */ } = resolvedOptions;
 
   const parts: string[] = [];
   for (let i = 0; i < entries.length; i++) {
@@ -75,11 +75,7 @@ export function formatMilliseconds(
     if (entry.amount === 0) continue;
     if (parts.length >= showCount) break;
 
-    const format = formatUnit(
-      entry.unit,
-      entry.amount,
-      formatStyle === 'short',
-    );
+    const format = formatUnit(entry.unit, entry.amount, abbreviateUnits);
     parts.push(format);
   }
 

@@ -13,6 +13,11 @@ describe('Russian', () => {
       expect(ms(0)).toBeNull();
     });
 
+    it('formats with abbreviated units', () => {
+      const options = { abbreviateUnits: true };
+      expect(ms(90061, options)).toBe('1м 30с');
+    });
+
     it('includes milliseconds and sub-milliseconds', () => {
       const options = { includeMs: true, includeSubMs: true };
       expect(ms(90061, options)).toBe('1 минута 30 секунд 61 миллисекунда');

@@ -11,7 +11,7 @@ Codebase rewrite to improve readability and performance
 - Improved performance of formatting milliseconds by up to 10%
 - Added additional options to `FormatOptions` for more customisation
 
-  - Replaced `shortFormat` with `formatStyle`
+  - Replaced `shortFormat` with `abbreviateUnits`
   - Added `insertAnd`, outputs no longer include and by default
   - Replaced `roundUp` with `unitCount` and `roundingStrategy`
   - Added `firstUnitOnly` as a shortcut for `unitCount: 1`

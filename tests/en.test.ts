@@ -13,6 +13,11 @@ describe('English', () => {
       expect(ms(0)).toBeNull();
     });
 
+    it('formats with abbreviated units', () => {
+      const options = { abbreviateUnits: true };
+      expect(ms(90061, options)).toBe('1m 30s');
+    });
+
     it('includes milliseconds and sub-milliseconds', () => {
       const options = { includeMs: true, includeSubMs: true };
       expect(ms(90061, options)).toBe('1 minute 30 seconds 61 milliseconds');

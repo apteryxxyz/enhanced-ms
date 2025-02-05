@@ -13,6 +13,11 @@ describe('German', () => {
       expect(ms(0)).toBeNull();
     });
 
+    it('formats with abbreviated units', () => {
+      const options = { abbreviateUnits: true };
+      expect(ms(90061, options)).toBe('1Min. 30Sek.');
+    });
+
     it('includes milliseconds and sub-milliseconds', () => {
       const options = { includeMs: true, includeSubMs: true };
       expect(ms(90061, options)).toBe('1 Minute 30 Sekunden 61 Millisekunden');
