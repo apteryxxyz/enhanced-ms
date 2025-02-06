@@ -15,7 +15,7 @@ export type Language = ReturnType<typeof makeLanguage>;
  *
  * @example
  * const english = makeLanguage(languages.en);
- * console.log(english.decimalSeparator); // Outputs: "."
+ * english.decimalSeparator // '.'
  */
 export function makeLanguage(languageDefinition: LanguageDefinition) {
   const decimalSeparator = languageDefinition.decimal;

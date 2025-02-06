@@ -1,9 +1,4 @@
 import { type Language, getLanguage } from '~/languages/helpers/make-language';
-import {
-  type ParseOptions,
-  defaultParseOptions,
-  resolveOptions,
-} from './helpers/resolve-options';
 
 /**
  * Parse a human-readable duration string into milliseconds.
@@ -16,19 +11,14 @@ import {
  * @example
  * parseDuration("2h 30m")
  * // Returns: 9000000 (2 hours + 30 minutes in ms)
- *
- * @example
  * const german = getLanguage('de');
  * parseDuration("2 stunden 30 minuten", german)
+ * // Returns: 9000000 (2 hours + 30 minutes in ms)
  */
 export function parseDuration(
   duration: string,
   language: Language = getLanguage('en'),
-  options: ParseOptions = defaultParseOptions,
 ) {
-  const resolvedOptions = resolveOptions(options, language);
-  void resolvedOptions;
-
   const matches = duration.toLowerCase().match(language.matcherRegex);
   if (!matches || matches.length === 0) return 0;
 

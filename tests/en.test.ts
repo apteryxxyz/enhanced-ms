@@ -4,32 +4,40 @@ import { describe, expect, it } from 'vitest';
 const ms = createMs({ language: 'en' });
 
 describe('English', () => {
-  describe('ms(milliseconds: number)', () => {
-    it('format milliseconds with default options', () => {
+  describe('format milliseconds', () => {
+    it('formats milliseconds with default options', () => {
       expect(ms(90061)).toBe('1 minute 30 seconds');
+      expect(ms(90061000)).toBe('1 day 1 hour 1 minute 1 second');
     });
 
     it('returns null for sub one second with default options', () => {
       expect(ms(0)).toBeNull();
     });
 
-    it('formats with abbreviated units', () => {
-      const options = { abbreviateUnits: true };
+    it('format using short preset', () => {
+      expect(ms(90061, 'short')).toBe('1m 30s');
+      expect(ms(90061000, 'short')).toBe('1d 1h');
+    });
+
+    it('format using colon notation preset', () => {
+      expect(ms(90061, 'colonNotation')).toBe('01:30');
+      expect(ms(90061000, 'colonNotation')).toBe('25:01:01');
+    });
+
+    it('formats with use abbreviations', () => {
+      const options = { useAbbreviations: true };
       expect(ms(90061, options)).toBe('1m 30s');
+      expect(ms(90061000, options)).toBe('1d 1h 1m 1s');
     });
 
-    it('includes milliseconds and sub-milliseconds', () => {
-      const options = { includeMs: true, includeSubMs: true };
-      expect(ms(90061, options)).toBe('1 minute 30 seconds 61 milliseconds');
-    });
-
-    it('formats with commas and "and" insertions', () => {
-      const options = { insertCommas: true, insertAnd: true };
-      expect(ms(90061, options)).toBe('1 minute, and 30 seconds');
+    it('formats with unit limit', () => {
+      const options = { unitLimit: 1 };
+      expect(ms(90061, options)).toBe('1 minute');
+      expect(ms(90061000, options)).toBe('1 day');
     });
   });
 
-  describe('ms(duration: string)', () => {
+  describe('parse duration', () => {
     it('parses durations', () => {
       expect(ms('1 minute 30 seconds')).toBe(90000);
       expect(ms('1m 30s')).toBe(90000);

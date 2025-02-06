@@ -11,10 +11,9 @@ Codebase rewrite to improve readability and performance
 - Improved performance of formatting milliseconds by up to 10%
 - Added additional options to `FormatOptions` for more customisation
 
-  - Replaced `shortFormat` with `abbreviateUnits`
-  - Added `insertAnd`, outputs no longer include and by default
-  - Replaced `roundUp` with `unitCount` and `roundingStrategy`
-  - Added `firstUnitOnly` as a shortcut for `unitCount: 1`
+  - Replaced `shortFormat` with `useAbbreviations`
+  - Added `hideUnitNames`, `includeZero`, `includedUnits`, `unitLimit`, `unitSeparator`, `minimumDigits`
+  - Added format option presets: `short`, `fullPrecision`, `colonNotation`
 
 - Improved base performance of parsing durations by up to 1,100%
 - Removed ability for parse to handle maths operators, this will likely be re-added in a future version as an option

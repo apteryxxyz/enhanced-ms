@@ -1,10 +1,68 @@
 import { formatMilliseconds } from './format';
-import type { FormatOptions } from './format/helpers/resolve-options';
+import {
+  type FormatOptions,
+  type FormatOptionsPreset,
+  resolveFormatPresetOptions,
+} from './format/helpers/resolve-options';
 import type { languages } from './languages';
 import type { LanguageDefinition } from './languages/helpers/definition-types';
 import { getLanguage } from './languages/helpers/make-language';
 import { parseDuration } from './parse';
-import type { ParseOptions } from './parse/helpers/resolve-options';
+
+/**
+ * A function that formats and parses durations.
+ */
+export interface Ms {
+  /**
+   * Formats a duration from milliseconds to a human-readable string.
+   *
+   * @params milliseconds The duration in milliseconds to format
+   * @returns The formatted duration string, or null if the duration is invalid
+   *
+   * @example
+   * ms(90061) // "1 minute 30 seconds"
+   */
+  (milliseconds: number): string | null;
+
+  /**
+   * Formats a duration from milliseconds to a human-readable string.
+   *
+   * @params milliseconds The duration in milliseconds to format
+   * @params options The formatting options to use
+   * @returns The formatted duration string, or null if the duration is invalid
+   *
+   * @example
+   * ms(90061, { useAbbreviations: true }) // "1m 30s"
+   * ms(90061, { unitLimit: 1 }) // "1 minute"
+   * ms(90061, { useAbbreviations: true, unitLimit: 1 }) // "1m"
+   */
+  (milliseconds: number, options: FormatOptions): string | null;
+
+  /**
+   * Formats a duration from milliseconds to a human-readable string.
+   *
+   * @params milliseconds The duration in milliseconds to format
+   * @params preset The formatting preset to use
+   * @returns The formatted duration string, or null if the duration is invalid
+   *
+   * @example
+   * ms(90061, 'short') // "1m 30s"
+   * ms(90061, 'colonNotation') // "00:01:30"
+   */
+  (milliseconds: number, preset: FormatOptionsPreset): string | null;
+
+  /**
+   * Parse a human-readable duration string into milliseconds.
+   *
+   * @params duration The duration string to parse (e.g., "2h 30m", "1 day, 5 hours")
+   * @returns The total duration in milliseconds, including 0 if the duration is invalid
+   *
+   * @example
+   * ms("1 minute 30 seconds") // 90061
+   * ms("1m 30s") // 90061
+   */
+  (duration: string): number;
+}
 
 export interface CreateMsOptions {
   /**
@@ -15,86 +73,44 @@ export interface CreateMsOptions {
   language?: keyof typeof languages | LanguageDefinition;
 
   /**
-   * Default formatting options for the `ms` function.
+   * Default formatting options to use.
    */
-  formatOptions?: FormatOptions;
-
-  /**
-   * Default parsing options for the `ms` function.
-   */
-  parseOptions?: ParseOptions;
+  formatOptions?: FormatOptions | FormatOptionsPreset;
 }
 
-export type Ms = {
-  /**
-   * Formats a duration from milliseconds into a human-readable duration string.
-   *
-   * @param milliseconds The duration in milliseconds to format
-   * @param options Optional formatting options
-   * @returns A formatted duration string (e.g., "1 hour, 30 minutes") or `null` if the duration is invalid
-   *
-   * @example
-   * ms(90061); // "1 minute 30 seconds"
-   * ms(90061, { includeMs: true }); // "1 minute 30 seconds 10 milliseconds"
-   * ms(90061, { formatStyle: 'short' }); // "1m 30s"
-   * ms(90061, { insertAnd: true }); // "1 minute and 30 seconds"
-   * ms(90061, { insertCommas: true }); // "1 minute, 30 seconds"
-   * ms(90061, { firstUnitOnly: true }); // "1 minute"
-   */
-  (milliseconds: number, options?: FormatOptions): string | null;
-
-  /**
-   * Parses a human-readable duration string into milliseconds.
-   *
-   * @param duration The duration string to parse (e.g., "2h 30m", "1 day, 5 hours")
-   * @param options Optional parsing options
-   * @returns The parsed duration in milliseconds
-   *
-   * @example
-   * ms("1 minute 30 seconds"); // 90061
-   * ms("1m 30s"); // 90061
-   */
-  (duration: string, options?: ParseOptions): number;
-};
-
 /**
- * Creates a function to format and parse time durations.
- *
- * @param options Configuration options for language, formatting, and parsing
- * @returns A function that can format a number into a human-readable duration string or parse a duration string into milliseconds
+ * Creates a new function that formats and parses durations using the specified options as defaults.
+ * @param options The options to use for formatting and parsing
+ * @returns A new function that formats and parses durations
  *
  * @example
  * const ms = createMs({ language: 'en' });
- * ms(900000); // "15 minutes" (formatted in English)
- * ms("15 minutes"); // 900000 (parsed into milliseconds)
- *
- * @example
- * const deMs = createMs({ language: 'de' });
- * deMs(900000); // "15 Minuten" (formatted in German)
- * deMs("15 minuten"); // 900000 (parsed into milliseconds)
+ * const ms = createMs({ language: 'ru' });
+ * const ms = createMs({ language: 'de' });
  */
 export function createMs(options: CreateMsOptions = {}): Ms {
   const language = getLanguage(options.language ?? 'en');
-  const defaultFormatOptions = options.formatOptions ?? {};
-  const defaultParseOptions = options.parseOptions ?? {};
+  const defaultFormatOptions = //
+    resolveFormatPresetOptions(options.formatOptions);
 
-  function ms(milliseconds: number, options?: FormatOptions): string | null;
-  function ms(duration: string, options?: FormatOptions): number;
-
-  function ms(...args: [number, FormatOptions?] | [string, FormatOptions?]) {
-    switch (typeof args[0]) {
+  function ms(
+    ...args: [number, FormatOptions?] | [number, FormatOptionsPreset] | [string]
+  ) {
+    switch (typeof args[0]!) {
       case 'number': {
         const [milliseconds, additionalOptions] = args;
         if (Number.isNaN(milliseconds) || !Number.isFinite(milliseconds))
           throw new TypeError('Expected a finite number');
-        const formatOptions = { ...defaultFormatOptions, ...additionalOptions };
+        if (milliseconds < 0) throw new TypeError('Expected a positive number');
+
+        const presetOptions = resolveFormatPresetOptions(additionalOptions);
+        const formatOptions = { ...defaultFormatOptions, ...presetOptions };
         return formatMilliseconds(milliseconds, language, formatOptions);
       }
 
       case 'string': {
-        const [duration, additionalOptions] = args;
-        const parseOptions = { ...defaultParseOptions, ...additionalOptions };
-        return parseDuration(duration, language, parseOptions);
+        const [duration] = args;
+        return parseDuration(duration, language) ?? 0;
       }
 
       default:
@@ -102,5 +118,5 @@ export function createMs(options: CreateMsOptions = {}): Ms {
     }
   }
 
-  return ms;
+  return ms as Ms;
 }

@@ -30,3 +30,4 @@ export const units = {
   century: 3_153_600_000_000, // 100 years
   millennium: 31_536_000_000_000, // 1000 years
 } as const satisfies Record<string, number>;
+export type Unit = keyof typeof units;
