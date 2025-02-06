@@ -15,55 +15,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Workflow
-        uses: ./.github/actions/setup
+      - name: Setup Node.js
+        uses: ./.github/actions/node
 
-      - name: Run Type Checker
+      - name: Run the type checker
         run: pnpm check
 
   quality:
-    name: Quality Checks
+    name: Linting
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Workflow
-        uses: ./.github/actions/setup
+      - name: Setup Node.js
+        uses: ./.github/actions/node
 
-      - name: Run Quality Checks
-        run: pnpm quality
+      - name: Run the linter
+        run: pnpm lint
 
   build:
     name: Building
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Workflow
-        uses: ./.github/actions/setup
+      - name: Setup Node.js
+        uses: ./.github/actions/node
 
-      - name: Build project
+      - name: Build the package
         run: pnpm build
 
   test:
     name: Testing
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Workflow
-        uses: ./.github/actions/setup
+      - name: Setup Node.js
+        uses: ./.github/actions/node
 
       - name: Run tests
         run: pnpm test

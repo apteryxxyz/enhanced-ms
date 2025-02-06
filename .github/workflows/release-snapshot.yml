@@ -3,7 +3,7 @@ name: Release Snapshot
 on:
   push:
     branches: [main]
-    paths: [".changesets/**"]
+    paths: [".changeset/**"]
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -14,13 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Workflow
-        uses: ./.github/actions/setup
+      - name: Setup Node.js
+        uses: ./.github/actions/node
 
-      - name: Release Snapshot
-        run: pnpm run release:snapshot
+      - name: Publish snapshot version
+        run: |
+          pnpm changeset version --snapshot beta
+          pnpm biome format package.json --write
+          pnpm build && pnpm test
+          pnpm changeset publish --tag beta --no-git-tag
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
