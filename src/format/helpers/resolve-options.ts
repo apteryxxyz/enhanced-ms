@@ -4,7 +4,7 @@ import type { ParseUnit } from './parse-milliseconds';
 
 export interface FormatOptions {
   /**
-   * The preset to extend.
+   * Extends the preset with the given options.
    */
   extends?: FormatOptionsPreset;
 
@@ -16,7 +16,7 @@ export interface FormatOptions {
   hideUnitNames?: boolean;
 
   /**
-   * Use abbreviations for units.
+   * Use abbreviations for unit names.
    * @default false
    */
   useAbbreviations?: boolean;

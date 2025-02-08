@@ -41,7 +41,7 @@
     "test": "vitest --run",
     "prepare": "husky",
     "change": "changeset",
-    "release": "changeset version && pnpm format && pnpm build && changeset publish"
+    "release": "changeset version && pnpm biome package.json --write && pnpm build && changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
