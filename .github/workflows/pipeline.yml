@@ -1,0 +1,95 @@
+name: Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths: ["package.json", "src/**", "tests/**"]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths: ["package.json", "src/**", "tests/**"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Type Checking
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/node
+
+      - name: Run the type checker
+        run: pnpm check
+
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/node
+
+      - name: Run the linter
+        run: pnpm lint
+
+  build:
+    name: Building
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/node
+
+      - name: Build the package
+        run: pnpm build
+
+  test:
+    name: Testing
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/node
+
+      - name: Run tests
+        run: pnpm test
+
+  release:
+    name: Releasing Snapshot
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/node
+
+      - name: Publish snapshot version
+        run: |
+          pnpm changeset version --snapshot beta
+          pnpm biome format package.json --write
+          pnpm build
+          pnpm changeset publish --tag beta --no-git-tag
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

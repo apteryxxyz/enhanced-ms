@@ -1,12 +1,9 @@
-import type { Language } from '../languages';
-
 export default {
   decimal: '.',
   and: 'me te',
 
-  units: [
-    {
-      key: 'ns',
+  units: {
+    nanosecond: {
       name: 'hēkona nanomiri',
       matches: [
         'hēkona nanomiri',
@@ -15,8 +12,7 @@ export default {
         'hekonananomiri',
       ],
     },
-    {
-      key: 'us',
+    microsecond: {
       name: 'hēkona miriona',
       matches: [
         'hēkona miriona',
@@ -25,60 +21,49 @@ export default {
         'hekonamiriona',
       ],
     },
-    {
-      key: 'ms',
+    millisecond: {
       name: 'hēkona miri',
       matches: ['hēkona miri', 'kākonamiri', 'hekona miri', 'hekonamiri'],
     },
-    {
-      key: 's',
+    second: {
       name: 'hēkona',
       matches: ['hēkona', 'hekona'],
     },
-    {
-      key: 'm',
+    minute: {
       name: 'meneti',
       matches: ['meneti'],
     },
-    {
-      key: 'h',
+    hour: {
       name: 'hāora',
       matches: ['hāora', 'haora'],
     },
-    {
-      key: 'd',
+    day: {
       name: 'rā',
       matches: ['rā', 'ra'],
     },
-    {
-      key: 'w',
+    week: {
       name: 'wiki',
       matches: ['wiki'],
     },
-    {
-      key: 'mo',
+    month: {
       name: 'marama',
       matches: ['marama'],
     },
-    {
-      key: 'y',
+    year: {
       name: 'tau',
       matches: ['tau', 'houanga'],
     },
-    {
-      key: 'dec',
+    decade: {
       name: 'tekau tau',
       matches: ['tekautau', 'tekau tau'],
     },
-    {
-      key: 'c',
+    century: {
       name: 'rau tau',
       matches: ['rautau', 'rau tau'],
     },
-    {
-      key: 'kyr',
+    millennium: {
       name: 'mano tau',
       matches: ['manotau', 'mano tau'],
     },
-  ],
-} satisfies Language;
+  },
+} satisfies import('./helpers/definition-types').LanguageDefinition;
