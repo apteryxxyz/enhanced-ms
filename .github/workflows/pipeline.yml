@@ -69,9 +69,6 @@ jobs:
       - name: Setup Node.js
         uses: ./.github/actions/node
 
-      - name: Install playwright browsers
-        run: pnpm playwright install --with-deps
-
       - name: Run tests
         run: pnpm test
 
