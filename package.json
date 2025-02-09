@@ -1,6 +1,6 @@
 {
   "name": "enhanced-ms",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "packageManager": "pnpm@9.15.4",
   "type": "module",
   "description": "Convert milliseconds to human-readable duration strings and vice versa",
@@ -41,7 +41,7 @@
     "test": "vitest --run",
     "prepare": "husky",
     "change": "changeset",
-    "release": "changeset version && pnpm biome package.json --write && pnpm build && changeset publish"
+    "release": "changeset version && biome format package.json --write && pnpm build && changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
