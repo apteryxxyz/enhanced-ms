@@ -28,6 +28,7 @@
   "main": "./dist/index.cjs",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     }
@@ -41,7 +42,10 @@
     "test": "vitest --run",
     "prepare": "husky",
     "change": "changeset",
-    "release": "changeset version && biome format package.json --write && pnpm build && changeset publish"
+    "release:version": "changeset version && biome format package.json --write",
+    "release:snapshot:version": "changeset version --snapshot beta && biome format package.json --write",
+    "release:publish": "pnpm build && changeset publish",
+    "release:snapshot:publish": "pnpm build && changeset publish --tag beta --no-git-tag"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

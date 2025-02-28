@@ -2,7 +2,6 @@
   "recommendations": [
     "biomejs.biome",
     "streetsidesoftware.code-spell-checker",
-    "gruntfuggly.todo-tree",
-    "bradlc.vscode-tailwindcss"
+    "gruntfuggly.todo-tree"
   ]
 }
