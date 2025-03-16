@@ -94,7 +94,7 @@ export function resolveFormatOptions(options: Omit<FormatOptions, 'extends'>) {
     includeZero = defaultFormatOptions.includeZero,
     includeMs = defaultFormatOptions.includeMs,
     includeSubMs = defaultFormatOptions.includeSubMs,
-    includedUnits = defaultFormatOptions.includedUnits,
+    includedUnits = [...defaultFormatOptions.includedUnits],
     unitLimit = defaultFormatOptions.unitLimit,
     unitSeparator = defaultFormatOptions.unitSeparator,
     minimumDigits = defaultFormatOptions.minimumDigits,
