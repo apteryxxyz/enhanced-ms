@@ -56,6 +56,10 @@ The currently supported languages include:
 | German            | de  |
 | Russian           | ru  |
 | Māori             | mi  |
+| Spanish           | es  |
+| Dutch             | nl  |
+| Italian           | it  |
+| French            | fr  |
 
 You can help by adding support for more languages.
 
