@@ -1,6 +1,6 @@
 {
   "name": "enhanced-ms",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "packageManager": "pnpm@9.15.4",
   "type": "module",
   "description": "Convert milliseconds to human-readable duration strings and vice versa",

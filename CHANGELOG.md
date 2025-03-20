@@ -1,5 +1,15 @@
 # enhanced-ms
 
+## 4.1.0
+
+### Minor Changes
+
+- 37840a3: Added language support for Dutch, French, Italian and Spanish
+
+### Patch Changes
+
+- 10d9b89: Fixed handling of `includeMs` and `includeSubMs` options
+
 ## 4.0.0
 
 ### Major Changes
